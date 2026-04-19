@@ -55,6 +55,26 @@ body {
 .rd2 { transition-delay: 0.2s; }
 .rd3 { transition-delay: 0.3s; }
 
+/* ── Responsive nav ── */
+.topnav {
+  display: none;
+}
+.bottom-nav {
+  display: flex;
+}
+@media (min-width: 768px) {
+  .topnav {
+    display: flex;
+    gap: 2rem;
+  }
+  .bottom-nav {
+    display: none;
+  }
+  body {
+    padding-bottom: 0 !important;
+  }
+}
+
 /* ── Scroll snap story panel ── */
 .story-scroll {
   scroll-snap-type: y mandatory;

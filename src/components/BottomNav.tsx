@@ -13,13 +13,12 @@ export default function BottomNav() {
   const path = usePathname();
 
   return (
-    <nav style={{
+    <nav className="bottom-nav" style={{
       position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 200,
       height: 'var(--bottom-nav-h)',
       paddingBottom: 'env(safe-area-inset-bottom, 0px)',
       background: 'var(--off-white)',
       borderTop: '1px solid var(--border)',
-      display: 'flex',
     }}>
       {tabs.map(tab => {
         const active = path === tab.href;
