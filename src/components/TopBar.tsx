@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const navLinks = [
   { href: '/',        label: 'Home' },
@@ -11,6 +12,14 @@ const navLinks = [
 
 export default function TopBar() {
   const path = usePathname();
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsDesktop(window.innerWidth >= 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   return (
     <header style={{
@@ -26,21 +35,26 @@ export default function TopBar() {
         The Artrobe
       </Link>
 
-      {/* Desktop nav — hidden on mobile via CSS class */}
-      <nav className="topnav">
-        {navLinks.map(link => (
-          <Link key={link.href} href={link.href} style={{
-            fontFamily: 'var(--sans)', fontSize: '0.78rem',
-            letterSpacing: '0.06em', textTransform: 'uppercase',
-            color: path === link.href ? 'var(--green-dk)' : 'var(--muted)',
-            textDecoration: 'none',
-            fontWeight: path === link.href ? 500 : 400,
-            transition: 'color 0.2s',
-          }}>
-            {link.label}
-          </Link>
-        ))}
-      </nav>
+      {isDesktop ? (
+        <nav style={{ display: 'flex', gap: '2rem' }}>
+          {navLinks.map(link => (
+            <Link key={link.href} href={link.href} style={{
+              fontFamily: 'var(--sans)', fontSize: '0.78rem',
+              letterSpacing: '0.06em', textTransform: 'uppercase',
+              color: path === link.href ? 'var(--green-dk)' : 'var(--muted)',
+              textDecoration: 'none',
+              fontWeight: path === link.href ? 500 : 400,
+              transition: 'color 0.2s',
+            }}>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+      ) : (
+        <span style={{ fontFamily: 'var(--sans)', fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--muted)' }}>
+          Menu ↓
+        </span>
+      )}
     </header>
   );
 }
