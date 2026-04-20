@@ -20,7 +20,7 @@ export async function getArtworks(): Promise<Artwork[]> {
     `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}`,
     {
       headers: { Authorization: `Bearer ${token}` },
-      cache: 'no-store',
+      cache: 'force-cache',
     }
   );
 
