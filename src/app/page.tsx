@@ -1,38 +1,15 @@
-'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import TopBar from '@/components/TopBar';
-import BottomNav from '@/components/BottomNav';
-import HeroSection from '@/components/HeroSection';
-import StatsBar from '@/components/StatsBar';
-import FeaturedWorks from '@/components/FeaturedWorks';
-import Footer from '@/components/Footer';
-import StoryPanel from '@/components/StoryPanel';
+import HomeClient from '@/components/HomeClient';
+import { getArtworks } from '@/lib/airtable';
+import { artworks as fallback } from '@/data/artworks';
 
-export default function HomePage() {
-  const [storyId, setStoryId] = useState<string | null>(null);
-  const router = useRouter();
-
-  return (
-    <>
-      <TopBar />
-      <main style={{ paddingTop: 'var(--nav-h)', paddingBottom: 'var(--bottom-nav-h)' }}>
-        <HeroSection onViewCollection={() => router.push('/gallery')} />
-        <StatsBar />
-        <FeaturedWorks onOpenStory={setStoryId} />
-        <section style={{ padding: '2.5rem 1.25rem', borderTop: '1px solid var(--border)' }}>
-          <p style={{ fontFamily: 'var(--sans)', fontSize: '0.6rem', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.6rem' }}>About The Artrobe</p>
-          <h2 style={{ fontFamily: 'var(--serif)', fontSize: 'clamp(1.6rem, 5vw, 2.2rem)', fontWeight: 300, color: 'var(--text)', lineHeight: 1.2, marginBottom: '1rem' }}>
-            Art that feels like a <em>second skin</em>
-          </h2>
-          <p style={{ fontFamily: 'var(--sans)', fontSize: '0.85rem', color: 'var(--muted)', lineHeight: 1.75, maxWidth: '40ch' }}>
-            A creative studio exploring form, stillness, and the quiet language of colour. Each piece begins with observation — the way morning light changes the colour of a wall, the stillness between two breaths.
-          </p>
-        </section>
-        <Footer />
-      </main>
-      <BottomNav />
-      <StoryPanel artworkId={storyId} onClose={() => setStoryId(null)} />
-    </>
-  );
+export default async function HomePage() {
+  let artworks = await getArtworks();
+  if (!artworks.length) {
+    artworks = fallback.map(a => ({
+      id: a.id, title: a.title, medium: a.medium,
+      year: a.year, price: a.price, tag: a.tag, img: a.img,
+      story1: a.story.chapter1.body, story2: a.story.chapter2.body, story3: a.story.chapter3.body,
+    }));
+  }
+  return <HomeClient artworks={artworks} />;
 }
