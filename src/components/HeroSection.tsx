@@ -23,6 +23,8 @@ export default function HeroSection({ onViewCollection, heroImages }: Props) {
   const slides = heroImages.length ? heroImages : [{ img: '/artworks/soft-power.webp', title: '' }];
   const [idx, setIdx] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
   useEffect(() => {
     if (slides.length <= 1 || paused) return;
@@ -51,7 +53,7 @@ export default function HeroSection({ onViewCollection, heroImages }: Props) {
             key={slides[idx].img}
             src={slides[idx].img}
             alt={slides[idx].title}
-            initial={{ opacity: 0, scale: 1.06 }}
+            initial={{ opacity: mounted ? 0 : 1, scale: 1.06 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
