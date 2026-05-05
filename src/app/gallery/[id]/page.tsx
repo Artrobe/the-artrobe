@@ -10,7 +10,7 @@ export async function generateStaticParams() {
 
 export default async function ArtworkPage({ params }: { params: { id: string } }) {
   let artworks = await getArtworks();
-  if (!artworks.length) artworks = fallback.map(fallbackToArtwork);
+  if (!artworks.length || artworks.every(a => !a.img)) artworks = fallback.map(fallbackToArtwork);
   const art = artworks.find(a => a.id === params.id);
   if (!art) notFound();
   return <ArtworkDetail art={art} />;
