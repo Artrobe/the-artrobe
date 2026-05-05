@@ -17,7 +17,13 @@
   --bottom-nav-h: calc(56px + env(safe-area-inset-bottom, 0px));
 }
 
-* {
+@media (min-width: 768px) {
+  :root {
+    --bottom-nav-h: 0px;
+  }
+}
+
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -26,6 +32,24 @@
 
 img {
   color: transparent;
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  max-width: 100%;
+  display: block;
+}
+
+/* Prevent double-tap zoom on all interactive elements */
+button, a, [role="button"] {
+  touch-action: manipulation;
+}
+
+/* Only apply hover transforms on devices that support hover */
+@media (hover: none) {
+  .no-hover-transform:hover {
+    transform: none !important;
+  }
 }
 
 html {
@@ -41,46 +65,134 @@ body {
   overscroll-behavior: none;
 }
 
-/* ── Reveal animations ── */
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+::selection {
+  background: var(--green-lt);
+  color: var(--text);
 }
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.rd1 { transition-delay: 0.1s; }
-.rd2 { transition-delay: 0.2s; }
-.rd3 { transition-delay: 0.3s; }
 
-/* ── Responsive nav ── */
-.topnav {
-  display: none;
-}
-.bottom-nav {
-  display: flex;
-}
 @media (min-width: 768px) {
-  .topnav {
-    display: flex;
-    gap: 2rem;
-  }
-  .bottom-nav {
-    display: none;
-  }
   body {
     padding-bottom: 0 !important;
   }
 }
 
-/* ── Scroll snap story panel ── */
+/* ── Scroll-snap story panel ── */
 .story-scroll {
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  -webkit-box-sizing: border-box;
+  /* Prevent Android Chrome fling-momentum from carrying into the panel */
+  overscroll-behavior: contain;
+}
+.story-scroll img {
+  max-width: none;
 }
 .story-chapter {
   scroll-snap-align: start;
+  -webkit-box-sizing: border-box;
+}
+
+/* ── Pulse for status indicators ── */
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,232,208,0.7); }
+  50%      { box-shadow: 0 0 0 6px rgba(212,232,208,0); }
+}
+
+/* ── Journal markdown prose ── */
+.journal-prose {
+  font-family: var(--sans);
+  color: var(--text);
+  line-height: 1.85;
+  font-size: 1rem;
+}
+.journal-prose p {
+  margin-bottom: 1.4rem;
+  color: var(--text);
+}
+.journal-prose h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.4rem, 4.5vw, 1.8rem);
+  letter-spacing: -0.01em;
+  color: var(--text);
+  margin: 2.4rem 0 1rem;
+  line-height: 1.2;
+}
+.journal-prose h3 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: var(--text);
+  margin: 2rem 0 0.7rem;
+}
+.journal-prose blockquote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.18rem;
+  color: var(--muted);
+  border-left: 2px solid var(--green-dk);
+  padding: 0.6rem 1rem;
+  margin: 2rem 0;
+  background: var(--cream);
+  border-radius: 0 10px 10px 0;
+}
+.journal-prose ol,
+.journal-prose ul {
+  padding-left: 1.4rem;
+  margin-bottom: 1.4rem;
+}
+.journal-prose li {
+  margin-bottom: 0.45rem;
+}
+.journal-prose strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.journal-prose a {
+  color: var(--green-dk);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+/* ── Native scrollbars on filter rows: invisible on touch ── */
+input[type='text']::-webkit-search-cancel-button {
+  display: none;
+}
+
+/* ── Contact form: side-by-side on tablet+, stacked on mobile ── */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+@media (max-width: 480px) {
+  .field-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Filter chip rows: horizontal scroll on mobile ── */
+.chip-scroll {
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.chip-scroll::-webkit-scrollbar { display: none; }
+.chip-scroll > * { flex-shrink: 0; }
+
+/* ── BottomNav: hidden on desktop ── */
+@media (min-width: 768px) {
+  .bottom-nav { display: none !important; }
+}
+
+/* ── Hero slideshow: arrows + title on desktop only ── */
+.hero-slide-title { display: none; }
+@media (min-width: 768px) {
+  .hero-slide-title { display: block; }
+  .hero-arrow { display: flex !important; }
 }
