@@ -32,7 +32,7 @@ export async function getArtworks(): Promise<Artwork[]> {
     `https://api.airtable.com/v0/${baseId}/${encodeURIComponent(table)}`,
     {
       headers: { Authorization: `Bearer ${token}` },
-      cache: 'force-cache',
+      next: { revalidate: 3600 },
     }
   );
 
@@ -50,7 +50,9 @@ export async function getArtworks(): Promise<Artwork[]> {
     year: r.fields['Year'] || new Date().getFullYear(),
     price: r.fields['Price'] || 0,
     tag: r.fields['Tag'] || '',
-    img: r.fields['Image'] || '',
+    img: Array.isArray(r.fields['Image'])
+      ? (r.fields['Image'][0]?.url || '')
+      : (r.fields['Image'] || ''),
     story1: r.fields['Story1'] || '',
     story2: r.fields['Story2'] || '',
     story3: r.fields['Story3'] || '',
