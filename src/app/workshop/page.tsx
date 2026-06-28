@@ -139,15 +139,16 @@ export default function WorkshopPage() {
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             style={{
               fontFamily: 'var(--serif)',
-              fontSize: 'clamp(3rem, 11vw, 5.5rem)',
+              fontSize: 'clamp(2.8rem, 10vw, 5rem)',
               fontWeight: 300, color: '#F7F5EF',
-              lineHeight: 1.0, letterSpacing: '-0.02em',
-              marginBottom: '0.4rem',
+              lineHeight: 1.05, letterSpacing: '-0.02em',
+              marginBottom: '0.2rem',
             }}
           >
-            Texture
+            The Art Experience
           </motion.h1>
-          <motion.h1
+
+          <motion.p
             animate={{
               textShadow: [
                 '0 0 20px rgba(168,197,160,0)',
@@ -158,30 +159,29 @@ export default function WorkshopPage() {
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
             style={{
               fontFamily: 'var(--serif)',
-              fontSize: 'clamp(3rem, 11vw, 5.5rem)',
+              fontSize: 'clamp(1rem, 3.5vw, 1.5rem)',
               fontWeight: 300, fontStyle: 'italic',
               color: 'var(--green)',
-              lineHeight: 1.0, letterSpacing: '-0.02em',
-              marginBottom: '1.5rem',
+              lineHeight: 1.4, letterSpacing: '0em',
+              marginBottom: '1.8rem',
             }}
           >
-            &amp; Touch
-          </motion.h1>
+            Create, connect &amp; take home your masterpiece
+          </motion.p>
 
           <p style={{
-            fontFamily: 'var(--serif)', fontSize: 'clamp(1rem, 3.5vw, 1.3rem)',
+            fontFamily: 'var(--serif)', fontSize: 'clamp(1rem, 3.5vw, 1.2rem)',
             fontStyle: 'italic', color: 'rgba(247,245,239,0.7)',
-            lineHeight: 1.6, maxWidth: '44ch', margin: '0 auto 0.8rem',
+            lineHeight: 1.6, maxWidth: '44ch', margin: '0 auto 0.6rem',
           }}>
-            An acrylic texture art workshop with Jahnvi
+            An immersive hands-on art workshop with Jahnvi
           </p>
           <p style={{
             fontFamily: 'var(--sans)', fontSize: '0.9rem',
             color: 'rgba(247,245,239,0.55)', lineHeight: 1.8,
             maxWidth: '40ch', margin: '0 auto 2.5rem',
           }}>
-            What does a painting feel like before it is finished?
-            Leave with one original textured canvas built by you, layer by layer.
+            Leave with original artwork built by you, layer by layer.
           </p>
 
           <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center', flexWrap: 'wrap' }}>
