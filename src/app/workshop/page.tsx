@@ -5,23 +5,23 @@ import PageShell from '@/components/ui/PageShell';
 import Reveal from '@/components/ui/Reveal';
 
 const WORKSHOP_DETAILS = [
-  { icon: '📅', label: 'Date', value: '21st June', sub: 'Sunday' },
-  { icon: '🕓', label: 'Time', value: '4:30 – 7:00 PM', sub: '2.5 hours' },
-  { icon: '📍', label: 'Venue', value: 'Millets N More', sub: 'Indore · View on map →', link: 'https://maps.app.goo.gl/c93kL2zen7edCvEg8?g_st=iw' },
+  { icon: '📅', label: 'Date', value: '4th July', sub: 'Saturday' },
+  { icon: '🕓', label: 'Time', value: '5:00 – 7:00 PM', sub: '2 hours' },
+  { icon: '📍', label: 'Venue', value: 'Casa Boho', sub: 'Sch 140, Indore · View on map →', link: '' },
   { icon: '👥', label: 'Seats', value: 'Limited', sub: 'Small group setting' },
 ];
 
 const WHAT_YOU_LEARN = [
-  { icon: '🎨', text: 'Building texture with palette knives, brushes, and hands' },
-  { icon: '🖌️', text: 'Layering techniques — add, scrape back, rebuild' },
-  { icon: '🎭', text: 'Choosing palettes that hold depth without muddiness' },
-  { icon: '✋', text: 'When to stop — the most important skill in texture work' },
-  { icon: '💡', text: 'How texture changes with light and time of day' },
+  { icon: '✨', text: 'How to paint and finish 3D elements beautifully' },
+  { icon: '🖼', text: 'Composition & placement techniques for a balanced artwork' },
+  { icon: '🎨', text: 'Color coordination and creative detailing' },
+  { icon: '💡', text: 'Creating depth and dimension in 3D canvas art' },
+  { icon: '🏆', text: 'Tips to assemble and finish a display-worthy masterpiece' },
 ];
 
 const SESSION_FLOW = [
-  { time: '15 min', title: 'Welcome & Materials', desc: 'Introduction, tea, and material overview', icon: '☕' },
-  { time: '30 min', title: 'Live Demonstration', desc: 'Watch Jahnvi build a textured layer live on canvas', icon: '👁' },
+  { time: '15 min', title: 'Welcome & Materials', desc: 'Introduction and material overview', icon: '🎨' },
+  { time: '30 min', title: 'Live Demonstration', desc: 'Learn how a 3D artwork comes together step by step', icon: '👁' },
   { time: '90 min', title: 'Your Canvas', desc: 'Guided hands-on painting with direct feedback', icon: '🎨' },
   { time: '15 min', title: 'Reveal & Q&A', desc: 'See your work, photograph it, questions answered', icon: '✨' },
 ];
@@ -29,7 +29,6 @@ const SESSION_FLOW = [
 const INCLUDES = [
   { icon: '🖼', text: 'Take-home original canvas (yours to keep)' },
   { icon: '🎨', text: 'All paints, palette knives, brushes & tools' },
-  { icon: '☕', text: 'Refreshments & snacks throughout' },
   { icon: '📸', text: 'Photography time at the end' },
   { icon: '📖', text: 'Technique reference card to take home' },
 ];
@@ -71,7 +70,7 @@ export default function WorkshopPage() {
             Texture &amp; Touch Workshop
           </span>
           <span style={{ fontFamily: 'var(--sans)', fontSize: '0.72rem', color: 'rgba(255,255,255,0.6)', marginLeft: '0.75rem' }}>
-            21 Jun · 4:30 PM · Millets N More
+            4 Jul · 5:00 PM · Casa Boho
           </span>
         </div>
         <button
@@ -511,7 +510,7 @@ export default function WorkshopPage() {
             color: 'var(--muted)', lineHeight: 1.7,
             maxWidth: '44ch', margin: '0 auto 2rem', textAlign: 'center',
           }}>
-            Fill in your details below. We will confirm the date, time, and exact venue within 24 hours.
+            Fill in your details below. We will confirm your spot within 24 hours.
           </p>
         </Reveal>
 
@@ -631,7 +630,7 @@ export default function WorkshopPage() {
             fontFamily: 'var(--sans)', fontSize: '0.88rem',
             color: 'rgba(247,245,239,0.5)', marginBottom: '2rem',
           }}>
-            21st June, Sunday · 4:30–7 PM · Millets N More, Indore
+            4th July, Saturday · 5:00–7:00 PM · Casa Boho, Sch 140, Indore
           </p>
         </Reveal>
         <Reveal delay={0.1}>
