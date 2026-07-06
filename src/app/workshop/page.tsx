@@ -3,6 +3,11 @@ import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useState } from 'react';
 import PageShell from '@/components/ui/PageShell';
 import Reveal from '@/components/ui/Reveal';
+import InstagramReel from '@/components/InstagramReel';
+
+const WORKSHOP_REELS = [
+  'https://www.instagram.com/reel/DZ46LUKMEMM/',
+];
 
 const WORKSHOP_DETAILS: {
   icon: string; label: string; value: string; sub: string; link?: string;
@@ -562,6 +567,38 @@ export default function WorkshopPage() {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      {/* ── Watch the workshop (Instagram reels) ── */}
+      <section style={{ padding: '3.5rem 1.25rem', background: 'var(--cream)', borderTop: '1px solid var(--border)' }}>
+        <Reveal>
+          <p style={{
+            fontFamily: 'var(--sans)', fontSize: '0.6rem',
+            letterSpacing: '0.2em', textTransform: 'uppercase',
+            color: 'var(--green-dk)', marginBottom: '0.5rem', textAlign: 'center',
+          }}>✦ Watch the Experience</p>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <h2 style={{
+            fontFamily: 'var(--serif)', fontSize: 'clamp(1.9rem, 6vw, 2.8rem)',
+            fontWeight: 300, color: 'var(--text)', lineHeight: 1.15,
+            letterSpacing: '-0.01em', marginBottom: '0.7rem', textAlign: 'center',
+          }}>
+            Moments in <em style={{ color: 'var(--green-dk)' }}>Motion</em>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p style={{
+            fontFamily: 'var(--sans)', fontSize: '0.9rem',
+            color: 'var(--muted)', lineHeight: 1.7,
+            maxWidth: '44ch', margin: '0 auto 2rem', textAlign: 'center',
+          }}>
+            A glimpse of the studio in full swing — straight from our Instagram.
+          </p>
+        </Reveal>
+        <Reveal delay={0.14}>
+          <InstagramReel permalinks={WORKSHOP_REELS} />
+        </Reveal>
       </section>
 
       {/* ── Register form ── */}
