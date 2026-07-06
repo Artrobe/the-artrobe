@@ -55,6 +55,11 @@ const MOMENTS = [
 
 const FORM_URL = 'https://forms.gle/8ojrtC6Ls9YQNPqDA';
 
+// Flip to true once the 19th July venue & theme are confirmed to re-open registration.
+const REGISTRATION_OPEN = false;
+const WAITLIST_MAILTO =
+  'mailto:theartrobe12@gmail.com?subject=Workshop%20Waitlist%20%E2%80%94%2019th%20July&body=Hi%20Jahnvi%2C%20I%27d%20like%20to%20join%20the%20waitlist%20for%20the%2019th%20July%20workshop.';
+
 export default function WorkshopPage() {
   const [showSticky, setShowSticky] = useState(false);
   const { scrollY } = useScroll();
@@ -64,8 +69,14 @@ export default function WorkshopPage() {
   });
 
   const scrollToForm = () => {
+    if (!REGISTRATION_OPEN) {
+      window.location.href = WAITLIST_MAILTO;
+      return;
+    }
     document.getElementById('register')?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const ctaLabel = REGISTRATION_OPEN ? 'Reserve My Spot' : 'Join the Waitlist';
 
   return (
     <PageShell>
@@ -101,7 +112,7 @@ export default function WorkshopPage() {
             textTransform: 'uppercase',
           }}
         >
-          Reserve My Spot
+          {ctaLabel}
         </button>
       </motion.div>
 
@@ -215,7 +226,7 @@ export default function WorkshopPage() {
                 boxShadow: '0 8px 28px rgba(168,197,160,0.35)',
               }}
             >
-              🎨 Reserve My Spot
+              🎨 {ctaLabel}
             </motion.button>
           </div>
         </motion.div>
@@ -407,13 +418,15 @@ export default function WorkshopPage() {
             fontFamily: 'var(--serif)', fontSize: 'clamp(1.4rem, 5vw, 2rem)',
             fontStyle: 'italic', color: 'var(--text)', marginBottom: '0.5rem',
           }}>
-            Reserve your spot.
+            {REGISTRATION_OPEN ? 'Reserve your spot.' : 'Be the first to know.'}
           </p>
           <p style={{
             fontFamily: 'var(--sans)', fontSize: '0.88rem',
             color: 'var(--muted)', marginBottom: '1.5rem',
           }}>
-            Register now to confirm your place.
+            {REGISTRATION_OPEN
+              ? 'Register now to confirm your place.'
+              : 'Join the waitlist and we’ll reach out once the 19th July details are confirmed.'}
           </p>
         </Reveal>
         <Reveal delay={0.1}>
@@ -436,7 +449,7 @@ export default function WorkshopPage() {
               cursor: 'pointer', letterSpacing: '0.05em', textTransform: 'uppercase',
             }}
           >
-            🎨 Join the Workshop
+            🎨 {REGISTRATION_OPEN ? 'Join the Workshop' : 'Join the Waitlist'}
           </motion.button>
         </Reveal>
       </section>
@@ -565,7 +578,7 @@ export default function WorkshopPage() {
               fontFamily: 'var(--sans)', fontSize: '0.6rem',
               letterSpacing: '0.2em', textTransform: 'uppercase',
               color: 'var(--green-dk)', marginBottom: '0.8rem',
-            }}>✦ Reserve Your Spot</p>
+            }}>{REGISTRATION_OPEN ? '✦ Reserve Your Spot' : '✦ Registrations Opening Soon'}</p>
           </div>
         </Reveal>
         <Reveal delay={0.06}>
@@ -574,7 +587,9 @@ export default function WorkshopPage() {
             fontWeight: 300, color: 'var(--text)', lineHeight: 1.15,
             letterSpacing: '-0.01em', marginBottom: '0.8rem', textAlign: 'center',
           }}>
-            Join the <em style={{ color: 'var(--green-dk)' }}>Workshop</em>
+            {REGISTRATION_OPEN
+              ? <>Join the <em style={{ color: 'var(--green-dk)' }}>Workshop</em></>
+              : <>Join the <em style={{ color: 'var(--green-dk)' }}>Waitlist</em></>}
           </h2>
         </Reveal>
         <Reveal delay={0.12}>
@@ -583,16 +598,17 @@ export default function WorkshopPage() {
             color: 'var(--muted)', lineHeight: 1.7,
             maxWidth: '44ch', margin: '0 auto 2rem', textAlign: 'center',
           }}>
-            Fill in your details below. We will confirm your spot within 24 hours.
+            {REGISTRATION_OPEN
+              ? 'Fill in your details below. We will confirm your spot within 24 hours.'
+              : 'The 19th July venue and theme are being finalised. Join the waitlist and we’ll email you the moment registration opens.'}
           </p>
         </Reveal>
 
         <Reveal delay={0.16}>
           <div style={{ textAlign: 'center' }}>
             <motion.a
-              href={FORM_URL}
-              target="_blank"
-              rel="noreferrer"
+              href={REGISTRATION_OPEN ? FORM_URL : WAITLIST_MAILTO}
+              {...(REGISTRATION_OPEN ? { target: '_blank', rel: 'noreferrer' } : {})}
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
               animate={{
@@ -612,13 +628,15 @@ export default function WorkshopPage() {
                 textDecoration: 'none',
               }}
             >
-              🎨 Open Registration Form →
+              {REGISTRATION_OPEN ? '🎨 Open Registration Form →' : '🎨 Join the Waitlist →'}
             </motion.a>
             <p style={{
               fontFamily: 'var(--sans)', fontSize: '0.78rem',
               color: 'var(--muted)', marginTop: '1rem',
             }}>
-              Opens a short Google Form · takes under 2 minutes
+              {REGISTRATION_OPEN
+                ? 'Opens a short Google Form · takes under 2 minutes'
+                : 'Opens your email · we’ll reply with full details soon'}
             </p>
           </div>
         </Reveal>
@@ -719,7 +737,7 @@ export default function WorkshopPage() {
               boxShadow: '0 8px 32px rgba(168,197,160,0.3)',
             }}
           >
-            🎨 Register Now
+            🎨 {REGISTRATION_OPEN ? 'Register Now' : 'Join the Waitlist'}
           </motion.button>
         </Reveal>
       </section>

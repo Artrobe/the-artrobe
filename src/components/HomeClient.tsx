@@ -62,7 +62,7 @@ export default function HomeClient({ artworks }: { artworks: Artwork[] }) {
                   color: 'rgba(247,245,239,0.7)', lineHeight: 1.8,
                   maxWidth: '40ch', marginBottom: '1.6rem',
                 }}>
-                  An immersive afternoon with Jahnvi — build an original canvas layer by layer and carry it home the same day. Next session 19th July.
+                  An immersive afternoon with Jahnvi — build an original canvas layer by layer and carry it home the same day. Next session 19th July — venue &amp; theme announced soon.
                 </p>
                 <MagneticButton
                   onClick={() => router.push('/workshop')}
@@ -73,7 +73,7 @@ export default function HomeClient({ artworks }: { artworks: Artwork[] }) {
                     fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase',
                     cursor: 'pointer',
                   }}
-                >🎨 Reserve Your Spot →</MagneticButton>
+                >🎨 Join the Waitlist →</MagneticButton>
               </div>
             </Reveal>
             <Reveal delay={0.12}>
