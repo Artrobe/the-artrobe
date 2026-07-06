@@ -4,10 +4,12 @@ import { useState } from 'react';
 import PageShell from '@/components/ui/PageShell';
 import Reveal from '@/components/ui/Reveal';
 
-const WORKSHOP_DETAILS = [
-  { icon: '📅', label: 'Date', value: '4th July', sub: 'Saturday' },
-  { icon: '🕓', label: 'Time', value: '5:00 – 7:00 PM', sub: '2 hours' },
-  { icon: '📍', label: 'Venue', value: 'Casa Boho', sub: 'Sch 140, Indore · View on map →', link: '' },
+const WORKSHOP_DETAILS: {
+  icon: string; label: string; value: string; sub: string; link?: string;
+}[] = [
+  { icon: '📅', label: 'Date', value: '19th July', sub: 'Saturday' },
+  { icon: '🎨', label: 'Theme', value: 'To Be Announced', sub: 'Revealed soon' },
+  { icon: '📍', label: 'Venue', value: 'To Be Announced', sub: 'Indore · details soon' },
   { icon: '👥', label: 'Seats', value: 'Limited', sub: 'Small group setting' },
 ];
 
@@ -34,6 +36,22 @@ const INCLUDES = [
 ];
 
 const ART_TOOLS = ['🎨', '🖌️', '✂️', '🖼', '✨', '🪡', '🖍️', '🎭'];
+
+// Curated workshop photos — proud results, Jahnvi teaching, candid moments
+const MOMENTS = [
+  { src: '/workshops/result-01.webp', alt: 'Two participants with their finished textured beach canvas' },
+  { src: '/workshops/candid-05.webp', alt: 'The workshop table under the leafy canopy' },
+  { src: '/workshops/teaching-01.webp', alt: 'Jahnvi guiding a participant with a palette knife' },
+  { src: '/workshops/result-04.webp', alt: 'A couple holding their floral and beach canvases' },
+  { src: '/workshops/candid-02.webp', alt: 'Participants painting together at the long table' },
+  { src: '/workshops/result-03.webp', alt: 'Two participants with their textured floral pieces' },
+  { src: '/workshops/teaching-03.webp', alt: 'Jahnvi with participants and their finished canvases' },
+  { src: '/workshops/candid-01.webp', alt: 'The group at work in the outdoor studio' },
+  { src: '/workshops/result-05.webp', alt: 'Three participants holding their beach canvases' },
+  { src: '/workshops/teaching-04.webp', alt: 'Jahnvi helping a young participant paint' },
+  { src: '/workshops/result-02.webp', alt: 'Jahnvi with a participant and her wave canvas' },
+  { src: '/workshops/candid-06.webp', alt: 'A relaxed afternoon of painting together' },
+];
 
 const FORM_URL = 'https://forms.gle/8ojrtC6Ls9YQNPqDA';
 
@@ -67,10 +85,10 @@ export default function WorkshopPage() {
       >
         <div>
           <span style={{ fontFamily: 'var(--serif)', fontSize: '1.1rem', color: '#fff', fontStyle: 'italic' }}>
-            Texture &amp; Touch Workshop
+            The Art Experience
           </span>
           <span style={{ fontFamily: 'var(--sans)', fontSize: '0.72rem', color: 'rgba(255,255,255,0.6)', marginLeft: '0.75rem' }}>
-            4 Jul · 5:00 PM · Casa Boho
+            19 Jul · Venue announced soon
           </span>
         </div>
         <button
@@ -477,6 +495,61 @@ export default function WorkshopPage() {
         </div>
       </section>
 
+      {/* ── Moments / photo wall ── */}
+      <section style={{ padding: '3.5rem 1.25rem', background: 'var(--off-white)', borderTop: '1px solid var(--border)' }}>
+        <Reveal>
+          <p style={{
+            fontFamily: 'var(--sans)', fontSize: '0.6rem',
+            letterSpacing: '0.2em', textTransform: 'uppercase',
+            color: 'var(--green-dk)', marginBottom: '0.5rem', textAlign: 'center',
+          }}>✦ From Our Last Workshop</p>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <h2 style={{
+            fontFamily: 'var(--serif)', fontSize: 'clamp(1.9rem, 6vw, 2.8rem)',
+            fontWeight: 300, color: 'var(--text)', lineHeight: 1.15,
+            letterSpacing: '-0.01em', marginBottom: '0.7rem', textAlign: 'center',
+          }}>
+            Moments &amp; <em style={{ color: 'var(--green-dk)' }}>Masterpieces</em>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p style={{
+            fontFamily: 'var(--sans)', fontSize: '0.9rem',
+            color: 'var(--muted)', lineHeight: 1.7,
+            maxWidth: '46ch', margin: '0 auto 2.2rem', textAlign: 'center',
+          }}>
+            Real people, real canvases — every piece built by hand, layer by layer, and carried home the same afternoon.
+          </p>
+        </Reveal>
+
+        <div style={{
+          columns: '3 200px', columnGap: '0.6rem',
+          maxWidth: '840px', margin: '0 auto',
+        }}>
+          {MOMENTS.map((m, i) => (
+            <motion.div
+              key={m.src}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.6, delay: (i % 3) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              style={{ breakInside: 'avoid', marginBottom: '0.6rem' }}
+            >
+              <img
+                src={m.src}
+                alt={m.alt}
+                loading="lazy"
+                style={{
+                  width: '100%', display: 'block', borderRadius: '8px',
+                  boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+                }}
+              />
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       {/* ── Register form ── */}
       <section
         id="register"
@@ -630,7 +703,7 @@ export default function WorkshopPage() {
             fontFamily: 'var(--sans)', fontSize: '0.88rem',
             color: 'rgba(247,245,239,0.5)', marginBottom: '2rem',
           }}>
-            4th July, Saturday · 5:00–7:00 PM · Casa Boho, Sch 140, Indore
+            19th July, Saturday · Indore · Venue &amp; theme announced soon
           </p>
         </Reveal>
         <Reveal delay={0.1}>
