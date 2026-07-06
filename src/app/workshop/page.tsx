@@ -39,6 +39,7 @@ const ART_TOOLS = ['🎨', '🖌️', '✂️', '🖼', '✨', '🪡', '🖍️'
 
 // Curated workshop photos — proud results, Jahnvi teaching, candid moments
 const MOMENTS = [
+  { src: '/workshops/display-artworks.webp', alt: 'Sample textured artworks on display — the 3D Art Workshop by Jahnvi' },
   { src: '/workshops/result-01.webp', alt: 'Two participants with their finished textured beach canvas' },
   { src: '/workshops/candid-05.webp', alt: 'The workshop table under the leafy canopy' },
   { src: '/workshops/teaching-01.webp', alt: 'Jahnvi guiding a participant with a palette knife' },
