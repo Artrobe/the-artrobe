@@ -173,6 +173,16 @@ input[type='text']::-webkit-search-cancel-button {
   }
 }
 
+/* ── Workshop promo banner: stack on mobile, image first ── */
+@media (max-width: 760px) {
+  .workshop-banner-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .workshop-banner-grid > *:last-child {
+    order: -1;
+  }
+}
+
 /* ── Filter chip rows: horizontal scroll on mobile ── */
 .chip-scroll {
   display: flex;

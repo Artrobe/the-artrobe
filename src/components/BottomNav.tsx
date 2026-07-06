@@ -4,11 +4,11 @@ import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 
 const tabs = [
-  { href: '/',        label: 'Home',    icon: HomeIcon },
-  { href: '/gallery', label: 'Gallery', icon: GridIcon },
-  { href: '/journal', label: 'Journal', icon: BookIcon },
-  { href: '/about',   label: 'About',   icon: CircleIcon },
-  { href: '/contact', label: 'Contact', icon: MailIcon },
+  { href: '/',         label: 'Home',     icon: HomeIcon },
+  { href: '/gallery',  label: 'Gallery',  icon: GridIcon },
+  { href: '/workshop', label: 'Workshop', icon: PaletteIcon },
+  { href: '/journal',  label: 'Journal',  icon: BookIcon },
+  { href: '/about',    label: 'About',    icon: CircleIcon },
 ];
 
 export default function BottomNav() {
@@ -84,6 +84,17 @@ function GridIcon({ active }: { active: boolean }) {
       <rect x="14" y="3" width="7" height="7" rx="1.2" />
       <rect x="3" y="14" width="7" height="7" rx="1.2" />
       <rect x="14" y="14" width="7" height="7" rx="1.2" />
+    </svg>
+  );
+}
+function PaletteIcon({ active }: { active: boolean }) {
+  const c = active ? 'var(--green-dk)' : 'currentColor';
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 2a10 10 0 100 20 2 2 0 002-2 2 2 0 00-.5-1.3 2 2 0 01-.5-1.3 2 2 0 012-2H17a5 5 0 005-5c0-4.4-4.5-8-10-8z" />
+      <circle cx="7.5" cy="10.5" r="1" fill={c} stroke="none" />
+      <circle cx="12" cy="7.5" r="1" fill={c} stroke="none" />
+      <circle cx="16.5" cy="10.5" r="1" fill={c} stroke="none" />
     </svg>
   );
 }

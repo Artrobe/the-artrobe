@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 const NAV = [
   { href: '/',         label: 'Home' },
   { href: '/gallery',  label: 'Gallery' },
+  { href: '/workshop', label: 'Workshop' },
   { href: '/journal',  label: 'Journal' },
   { href: '/about',    label: 'About' },
   { href: '/contact',  label: 'Contact' },

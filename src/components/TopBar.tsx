@@ -5,11 +5,12 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const navLinks = [
-  { href: '/',        label: 'Home' },
-  { href: '/gallery', label: 'Gallery' },
-  { href: '/journal', label: 'Journal' },
-  { href: '/about',   label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/',         label: 'Home' },
+  { href: '/gallery',  label: 'Gallery' },
+  { href: '/workshop', label: 'Workshop' },
+  { href: '/journal',  label: 'Journal' },
+  { href: '/about',    label: 'About' },
+  { href: '/contact',  label: 'Contact' },
 ];
 
 export default function TopBar() {

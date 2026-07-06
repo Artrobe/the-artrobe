@@ -27,6 +27,70 @@ export default function HomeClient({ artworks }: { artworks: Artwork[] }) {
         <StatsBar />
         <FeaturedWorks artworks={featuredOrAll} onOpenStory={setStoryId} />
 
+        {/* ── Workshop promo banner ── */}
+        <section
+          style={{
+            position: 'relative',
+            padding: 'clamp(3rem, 9vw, 5rem) 1.25rem',
+            borderTop: '1px solid var(--border)',
+            background: 'linear-gradient(150deg, #1e2e1c 0%, #2e3e2a 55%, #3d4e38 100%)',
+            overflow: 'hidden',
+          }}
+        >
+          <div style={{
+            maxWidth: '1000px', margin: '0 auto',
+            display: 'grid', gap: 'clamp(1.5rem, 4vw, 3rem)',
+            gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)',
+            alignItems: 'center',
+          }} className="workshop-banner-grid">
+            <Reveal>
+              <div>
+                <p style={{
+                  fontFamily: 'var(--sans)', fontSize: '0.6rem',
+                  letterSpacing: '0.2em', textTransform: 'uppercase',
+                  color: 'var(--green)', marginBottom: '0.9rem',
+                }}>✦ Hands-on Workshop · Indore</p>
+                <h2 style={{
+                  fontFamily: 'var(--serif)', fontSize: 'clamp(1.9rem, 6vw, 3rem)',
+                  fontWeight: 300, color: '#F7F5EF', lineHeight: 1.1,
+                  letterSpacing: '-0.01em', marginBottom: '1rem',
+                }}>
+                  Paint your own <em style={{ color: 'var(--green)' }}>masterpiece</em>
+                </h2>
+                <p style={{
+                  fontFamily: 'var(--sans)', fontSize: '0.92rem',
+                  color: 'rgba(247,245,239,0.7)', lineHeight: 1.8,
+                  maxWidth: '40ch', marginBottom: '1.6rem',
+                }}>
+                  An immersive afternoon with Jahnvi — build an original canvas layer by layer and carry it home the same day. Next session 19th July.
+                </p>
+                <MagneticButton
+                  onClick={() => router.push('/workshop')}
+                  style={{
+                    background: 'var(--green)', color: '#1a2e18', border: 'none',
+                    borderRadius: '6px', padding: '0.9rem 1.8rem',
+                    fontFamily: 'var(--sans)', fontSize: '0.82rem',
+                    fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase',
+                    cursor: 'pointer',
+                  }}
+                >🎨 Reserve Your Spot →</MagneticButton>
+              </div>
+            </Reveal>
+            <Reveal delay={0.12}>
+              <img
+                src="/workshops/teaching-01.webp"
+                alt="Jahnvi guiding a participant at a workshop"
+                loading="lazy"
+                style={{
+                  width: '100%', display: 'block', borderRadius: '12px',
+                  boxShadow: '0 12px 40px rgba(0,0,0,0.3)',
+                  aspectRatio: '4 / 5', objectFit: 'cover',
+                }}
+              />
+            </Reveal>
+          </div>
+        </section>
+
         <section
           id="about-teaser"
           style={{
