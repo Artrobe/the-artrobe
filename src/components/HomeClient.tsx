@@ -9,7 +9,14 @@ import StoryPanel from '@/components/StoryPanel';
 import PageShell from '@/components/ui/PageShell';
 import Reveal from '@/components/ui/Reveal';
 import MagneticButton from '@/components/ui/MagneticButton';
+import InstagramReel from '@/components/InstagramReel';
 import type { Artwork } from '@/lib/airtable';
+
+// Confirmed @the.artrobe reels only. DaSL3yNO4Lz is by amiable_artist__ — omitted pending confirmation.
+const HOME_REELS = [
+  'https://www.instagram.com/reel/DTdOquZDKgN/',
+  'https://www.instagram.com/reel/DaK8WoHs329/',
+];
 
 export default function HomeClient({ artworks }: { artworks: Artwork[] }) {
   const [storyId, setStoryId] = useState<string | null>(null);
@@ -89,6 +96,33 @@ export default function HomeClient({ artworks }: { artworks: Artwork[] }) {
               />
             </Reveal>
           </div>
+        </section>
+
+        {/* ── In Motion (Instagram reels) ── */}
+        <section style={{ padding: 'clamp(3rem, 8vw, 4.5rem) 1.25rem', background: 'var(--off-white)', borderTop: '1px solid var(--border)' }}>
+          <Reveal>
+            <p style={{
+              fontFamily: 'var(--sans)', fontSize: '0.6rem',
+              letterSpacing: '0.18em', textTransform: 'uppercase',
+              color: 'var(--muted)', marginBottom: '0.4rem', textAlign: 'center',
+            }}>
+              <span style={{ display: 'inline-block', width: 22, height: 1, background: 'var(--muted)', verticalAlign: 'middle', marginRight: 8 }} />
+              From the Studio
+              <span style={{ display: 'inline-block', width: 22, height: 1, background: 'var(--muted)', verticalAlign: 'middle', marginLeft: 8 }} />
+            </p>
+          </Reveal>
+          <Reveal delay={0.06}>
+            <h2 style={{
+              fontFamily: 'var(--serif)', fontSize: 'clamp(1.8rem, 6vw, 2.6rem)',
+              fontWeight: 300, color: 'var(--text)', lineHeight: 1.15,
+              letterSpacing: '-0.01em', marginBottom: '2rem', textAlign: 'center',
+            }}>
+              In <em style={{ color: 'var(--green-dk)' }}>Motion</em>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <InstagramReel permalinks={HOME_REELS} />
+          </Reveal>
         </section>
 
         <section

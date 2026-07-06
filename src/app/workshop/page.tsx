@@ -7,6 +7,7 @@ import InstagramReel from '@/components/InstagramReel';
 
 const WORKSHOP_REELS = [
   'https://www.instagram.com/reel/DZ46LUKMEMM/',
+  'https://www.instagram.com/reel/DZ7hGwUqW66/',
 ];
 
 const WORKSHOP_DETAILS: {
