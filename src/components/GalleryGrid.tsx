@@ -100,7 +100,7 @@ export default function GalleryGrid({ artworks }: Props) {
                   boxShadow: '0 4px 14px rgba(0,0,0,0.05)',
                 }}>
                   <motion.img
-                    src={art.img} alt={art.title}
+                    src={art.thumb || art.img} alt={art.title}
                     loading="lazy"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}

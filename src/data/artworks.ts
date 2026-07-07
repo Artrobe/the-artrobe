@@ -1,4 +1,7 @@
-export interface Artwork {
+// Nested authoring shape for the static fallback data. The runtime `Artwork`
+// type (flat storyN fields) lives in `@/lib/airtable`; `fallbackToArtwork`
+// bridges the two.
+export interface RawArtwork {
   id: string;
   title: string;
   medium: string;
@@ -18,7 +21,7 @@ export interface Artwork {
   };
 }
 
-export const artworks: Artwork[] = [
+export const artworks: RawArtwork[] = [
   {
     id: 'soft-power',
     title: 'Soft Power',

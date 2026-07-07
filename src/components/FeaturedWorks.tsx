@@ -52,7 +52,7 @@ export default function FeaturedWorks({ artworks, onOpenStory }: Props) {
               boxShadow: '0 6px 18px rgba(0,0,0,0.05)',
             }}>
               <motion.img
-                src={art.img} alt={art.title}
+                src={art.thumb || art.img} alt={art.title}
                 loading="lazy"
                 whileHover={{ scale: 1.06 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}

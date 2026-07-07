@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import PageShell from '@/components/ui/PageShell';
 import Reveal from '@/components/ui/Reveal';
 import MagneticButton from '@/components/ui/MagneticButton';
+import { SOCIAL_LINKS, CONTACT_EMAIL } from '@/data/social';
 
 const SUBJECTS = [
   'Purchase an artwork',
@@ -14,17 +15,12 @@ const SUBJECTS = [
 ];
 
 const DETAILS = [
-  { label: 'Email',         value: 'theartrobe12@gmail.com', href: 'mailto:theartrobe12@gmail.com' },
+  { label: 'Email',         value: CONTACT_EMAIL, href: `mailto:${CONTACT_EMAIL}` },
   { label: 'Response time', value: 'Within 48 hours' },
   { label: 'Location',      value: 'Indore, India' },
 ];
 
-const SOCIALS = [
-  { id: 'ig', label: 'Instagram', href: 'https://www.instagram.com/the.artrobe?igsh=MTV2Y3F6Zmh3NzAzaQ%3D%3D&utm_source=qr' },
-  { id: 'pt', label: 'Pinterest', href: 'https://pinterest.com/' },
-  { id: 'yt', label: 'YouTube',   href: 'https://youtube.com/' },
-  { id: 'be', label: 'Behance',   href: 'https://behance.net/' },
-];
+const SOCIALS = SOCIAL_LINKS;
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);

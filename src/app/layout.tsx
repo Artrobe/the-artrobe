@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import '../styles/globals.css';
+import { INSTAGRAM_URL } from '@/data/social';
 
 export const metadata: Metadata = {
   title: 'The Artrobe',
@@ -30,7 +31,7 @@ const personJsonLd = {
   name: 'Jahnvi',
   url: 'https://theartrobe.in',
   jobTitle: 'Artist',
-  sameAs: ['https://www.instagram.com/the.artrobe'],
+  sameAs: [INSTAGRAM_URL],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

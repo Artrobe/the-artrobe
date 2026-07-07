@@ -11,12 +11,7 @@ import Reveal from '@/components/ui/Reveal';
 import MagneticButton from '@/components/ui/MagneticButton';
 import InstagramReel from '@/components/InstagramReel';
 import type { Artwork } from '@/lib/airtable';
-
-// Confirmed @the.artrobe reels only. DaSL3yNO4Lz is by amiable_artist__ — omitted pending confirmation.
-const HOME_REELS = [
-  'https://www.instagram.com/reel/DTdOquZDKgN/',
-  'https://www.instagram.com/reel/DaK8WoHs329/',
-];
+import { HOME_REELS } from '@/data/social';
 
 export default function HomeClient({ artworks }: { artworks: Artwork[] }) {
   const [storyId, setStoryId] = useState<string | null>(null);

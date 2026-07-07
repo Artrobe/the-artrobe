@@ -21,11 +21,12 @@ export default function JournalPostPage({ params }: { params: { slug: string } }
     '@type': 'Article',
     headline: post.title,
     description: post.excerpt,
-    datePublished: post.date,
+    datePublished: new Date(post.date).toISOString(),
     url: `https://theartrobe.in/journal/${post.slug}`,
     author: {
       '@type': 'Person',
       name: 'Jahnvi',
+      url: 'https://theartrobe.in',
     },
     ...(post.cover ? { image: `https://theartrobe.in${post.cover}` } : {}),
   };

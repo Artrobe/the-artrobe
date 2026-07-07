@@ -4,11 +4,7 @@ import { useState } from 'react';
 import PageShell from '@/components/ui/PageShell';
 import Reveal from '@/components/ui/Reveal';
 import InstagramReel from '@/components/InstagramReel';
-
-const WORKSHOP_REELS = [
-  'https://www.instagram.com/reel/DZ46LUKMEMM/',
-  'https://www.instagram.com/reel/DZ7hGwUqW66/',
-];
+import { WORKSHOP_REELS, INSTAGRAM_URL, INSTAGRAM_HANDLE } from '@/data/social';
 
 const WORKSHOP_DETAILS: {
   icon: string; label: string; value: string; sub: string; link?: string;
@@ -727,7 +723,7 @@ export default function WorkshopPage() {
             </Reveal>
             <Reveal delay={0.12}>
               <a
-                href="https://instagram.com/the.artrobe"
+                href={INSTAGRAM_URL}
                 target="_blank"
                 rel="noreferrer"
                 style={{
@@ -735,7 +731,7 @@ export default function WorkshopPage() {
                   color: 'var(--green-dk)', textDecoration: 'none', fontWeight: 600,
                 }}
               >
-                Follow @the.artrobe →
+                Follow @{INSTAGRAM_HANDLE} →
               </a>
             </Reveal>
           </div>

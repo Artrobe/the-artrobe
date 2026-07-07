@@ -1,3 +1,5 @@
+import type { RawArtwork } from '@/data/artworks';
+
 export interface Artwork {
   id: string;
   title: string;
@@ -6,6 +8,7 @@ export interface Artwork {
   price: number;
   tag: string;
   img: string;
+  thumb?: string;
   imgAspect?: string;
   dimensions?: string;
   style?: string;
@@ -19,6 +22,11 @@ export interface Artwork {
   chapter3Heading?: string;
   chapter4Heading?: string;
   chapter5Heading?: string;
+}
+
+interface AirtableRecord {
+  id: string;
+  fields: Record<string, string | number | { url?: string }[] | undefined>;
 }
 
 export async function getArtworks(): Promise<Artwork[]> {
@@ -41,55 +49,40 @@ export async function getArtworks(): Promise<Artwork[]> {
     return [];
   }
 
-  const data = await res.json();
+  const data: { records: AirtableRecord[] } = await res.json();
 
-  return data.records.map((r: any) => ({
-    id: r.id,
-    title: r.fields['Title'] || '',
-    medium: r.fields['Medium'] || '',
-    year: r.fields['Year'] || new Date().getFullYear(),
-    price: r.fields['Price'] || 0,
-    tag: r.fields['Tag'] || '',
-    img: Array.isArray(r.fields['Image'])
-      ? (r.fields['Image'][0]?.url || '')
-      : (r.fields['Image'] || ''),
-    story1: r.fields['Story1'] || '',
-    story2: r.fields['Story2'] || '',
-    story3: r.fields['Story3'] || '',
-    story4: r.fields['Story4'] || '',
-    story5: r.fields['Story5'] || '',
-    chapter1Heading: r.fields['Chapter1Heading'] || '',
-    chapter2Heading: r.fields['Chapter2Heading'] || '',
-    chapter3Heading: r.fields['Chapter3Heading'] || '',
-    chapter4Heading: r.fields['Chapter4Heading'] || '',
-    chapter5Heading: r.fields['Chapter5Heading'] || '',
-  }));
+  const str = (v: AirtableRecord['fields'][string]): string =>
+    typeof v === 'string' ? v : '';
+
+  return data.records.map((r) => {
+    const image = r.fields['Image'];
+    return {
+      id: r.id,
+      title: str(r.fields['Title']),
+      medium: str(r.fields['Medium']),
+      year: typeof r.fields['Year'] === 'number' ? r.fields['Year'] : new Date().getFullYear(),
+      price: typeof r.fields['Price'] === 'number' ? r.fields['Price'] : 0,
+      tag: str(r.fields['Tag']),
+      img: Array.isArray(image) ? (image[0]?.url || '') : str(image),
+      story1: str(r.fields['Story1']),
+      story2: str(r.fields['Story2']),
+      story3: str(r.fields['Story3']),
+      story4: str(r.fields['Story4']),
+      story5: str(r.fields['Story5']),
+      chapter1Heading: str(r.fields['Chapter1Heading']),
+      chapter2Heading: str(r.fields['Chapter2Heading']),
+      chapter3Heading: str(r.fields['Chapter3Heading']),
+      chapter4Heading: str(r.fields['Chapter4Heading']),
+      chapter5Heading: str(r.fields['Chapter5Heading']),
+    };
+  });
 }
 
-interface FallbackInput {
-  id: string;
-  title: string;
-  medium: string;
-  year: number;
-  price: number;
-  tag: string;
-  img: string;
-  imgAspect?: string;
-  dimensions?: string;
-  style?: string;
-  story: {
-    chapter1: { heading: string; body: string };
-    chapter2: { heading: string; body: string };
-    chapter3: { heading: string; body: string };
-    chapter4: { heading: string; body: string };
-    chapter5: { heading: string; body: string };
-  };
-}
-
-export function fallbackToArtwork(a: FallbackInput): Artwork {
+export function fallbackToArtwork(a: RawArtwork): Artwork {
   return {
     id: a.id, title: a.title, medium: a.medium, year: a.year,
     price: a.price, tag: a.tag, img: a.img,
+    thumb: a.img.replace(/\.webp$/, '-thumb.webp'),
     imgAspect: a.imgAspect, dimensions: a.dimensions, style: a.style,
     story1: a.story.chapter1.body, story2: a.story.chapter2.body,
     story3: a.story.chapter3.body, story4: a.story.chapter4.body,

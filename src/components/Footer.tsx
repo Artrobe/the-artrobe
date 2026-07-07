@@ -1,6 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { SOCIAL_LINKS, CONTACT_EMAIL } from '@/data/social';
 
 const NAV = [
   { href: '/',         label: 'Home' },
@@ -9,13 +10,6 @@ const NAV = [
   { href: '/journal',  label: 'Journal' },
   { href: '/about',    label: 'About' },
   { href: '/contact',  label: 'Contact' },
-];
-
-const SOCIAL = [
-  { id: 'ig', href: 'https://www.instagram.com/the.artrobe?igsh=MTV2Y3F6Zmh3NzAzaQ%3D%3D&utm_source=qr' },
-  { id: 'pt', href: 'https://pinterest.com/' },
-  { id: 'yt', href: 'https://youtube.com/' },
-  { id: 'be', href: 'https://behance.net/' },
 ];
 
 export default function Footer() {
@@ -56,10 +50,10 @@ export default function Footer() {
         <div>
           <p style={{ fontFamily: 'var(--sans)', fontSize: '0.58rem', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.7rem' }}>Connect</p>
           <p style={{ fontFamily: 'var(--sans)', fontSize: '0.84rem', color: 'var(--text)', marginBottom: '0.35rem' }}>
-            <a href="mailto:theartrobe12@gmail.com" style={{ color: 'inherit', textDecoration: 'none' }}>theartrobe12@gmail.com</a>
+            <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: 'inherit', textDecoration: 'none' }}>{CONTACT_EMAIL}</a>
           </p>
           <div style={{ display: 'flex', gap: 6, marginTop: '0.6rem' }}>
-            {SOCIAL.map(s => (
+            {SOCIAL_LINKS.map(s => (
               <motion.a
                 key={s.id}
                 href={s.href}
