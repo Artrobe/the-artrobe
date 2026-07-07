@@ -15,5 +15,28 @@ export function generateMetadata({ params }: { params: { slug: string } }) {
 export default function JournalPostPage({ params }: { params: { slug: string } }) {
   const post = getPost(params.slug);
   if (!post) notFound();
-  return <JournalPostClient post={post} />;
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    datePublished: post.date,
+    url: `https://theartrobe.in/journal/${post.slug}`,
+    author: {
+      '@type': 'Person',
+      name: 'Jahnvi',
+    },
+    ...(post.cover ? { image: `https://theartrobe.in${post.cover}` } : {}),
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <JournalPostClient post={post} />
+    </>
+  );
 }

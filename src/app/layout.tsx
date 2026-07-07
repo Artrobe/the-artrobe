@@ -24,6 +24,15 @@ export const viewport: Viewport = {
   themeColor: '#F7F5EF',
 };
 
+const personJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Jahnvi',
+  url: 'https://theartrobe.in',
+  jobTitle: 'Artist',
+  sameAs: ['https://www.instagram.com/the.artrobe'],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -33,6 +42,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
       <body>{children}</body>
