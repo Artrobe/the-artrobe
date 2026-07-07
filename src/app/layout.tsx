@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     title: 'The Artrobe',
   },
   formatDetection: { telephone: false },
+  verification: {
+    google: 'puxWadlf_42QWxnrY_9_CJIjcowtUGyEff0QJ-gUmDE',
+  },
 };
 
 export const viewport: Viewport = {
