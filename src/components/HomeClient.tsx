@@ -51,20 +51,20 @@ export default function HomeClient({ artworks }: { artworks: Artwork[] }) {
                   fontFamily: 'var(--sans)', fontSize: '0.6rem',
                   letterSpacing: '0.2em', textTransform: 'uppercase',
                   color: 'var(--green)', marginBottom: '0.9rem',
-                }}>✦ Hands-on Workshop · Indore</p>
+                }}>✦ Texture Art Workshop · Indore</p>
                 <h2 style={{
                   fontFamily: 'var(--serif)', fontSize: 'clamp(1.9rem, 6vw, 3rem)',
                   fontWeight: 300, color: '#F7F5EF', lineHeight: 1.1,
                   letterSpacing: '-0.01em', marginBottom: '1rem',
                 }}>
-                  Paint your own <em style={{ color: 'var(--green)' }}>masterpiece</em>
+                  Coffee, conversations &amp; <em style={{ color: 'var(--green)' }}>coastal art</em>
                 </h2>
                 <p style={{
                   fontFamily: 'var(--sans)', fontSize: '0.92rem',
                   color: 'rgba(247,245,239,0.7)', lineHeight: 1.8,
                   maxWidth: '40ch', marginBottom: '1.6rem',
                 }}>
-                  An immersive afternoon with Jahnvi — build an original canvas layer by layer and carry it home the same day. Next session 19th July — venue &amp; theme announced soon.
+                  A relaxed Sunday evening with Jahnvi — paint your own coastal sea-wave canvas and carry it home the same day. Sunday, 19th July · 4 PM · NBC, New Palasia · ₹599.
                 </p>
                 <MagneticButton
                   onClick={() => router.push('/workshop')}
@@ -75,7 +75,7 @@ export default function HomeClient({ artworks }: { artworks: Artwork[] }) {
                     fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase',
                     cursor: 'pointer',
                   }}
-                >🎨 Join the Waitlist →</MagneticButton>
+                >🎨 Reserve My Spot →</MagneticButton>
               </div>
             </Reveal>
             <Reveal delay={0.12}>

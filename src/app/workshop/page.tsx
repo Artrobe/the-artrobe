@@ -9,32 +9,39 @@ import { WORKSHOP_REELS, INSTAGRAM_URL, INSTAGRAM_HANDLE } from '@/data/social';
 const WORKSHOP_DETAILS: {
   icon: string; label: string; value: string; sub: string; link?: string;
 }[] = [
-  { icon: '📅', label: 'Date', value: '19th July', sub: 'Saturday' },
-  { icon: '🎨', label: 'Theme', value: 'To Be Announced', sub: 'Revealed soon' },
-  { icon: '📍', label: 'Venue', value: 'To Be Announced', sub: 'Indore · details soon' },
-  { icon: '👥', label: 'Seats', value: 'Limited', sub: 'Small group setting' },
+  { icon: '📅', label: 'Date', value: '19th July', sub: 'Sunday · 4 PM onwards' },
+  { icon: '🌊', label: 'Theme', value: 'Coastal Texture Art', sub: 'Sea-wave designs' },
+  { icon: '📍', label: 'Venue', value: 'NBC, New Palasia', sub: 'Indore' },
+  { icon: '💵', label: 'Price', value: '₹599', sub: 'All materials + coffee' },
+];
+
+// The three exclusive coastal sea-wave designs — pick one on the day.
+const DESIGNS = [
+  { name: 'Blush Shore', desc: 'Soft pink sands meeting a gentle tide', img: '/artworks/soft-power.webp' },
+  { name: 'Turquoise Tides', desc: 'Bright aqua waves rolling over warm sand', img: '/artworks/earths-whisper.webp' },
+  { name: 'Midnight Shore', desc: 'Dramatic monochrome surf in black & white', img: '/artworks/echoes-in-texture.webp' },
 ];
 
 const WHAT_YOU_LEARN = [
-  { icon: '✨', text: 'How to paint and finish 3D elements beautifully' },
-  { icon: '🖼', text: 'Composition & placement techniques for a balanced artwork' },
-  { icon: '🎨', text: 'Color coordination and creative detailing' },
-  { icon: '💡', text: 'Creating depth and dimension in 3D canvas art' },
-  { icon: '🏆', text: 'Tips to assemble and finish a display-worthy masterpiece' },
+  { icon: '🌊', text: 'How to build realistic sea-wave texture with a palette knife' },
+  { icon: '🖼', text: 'Composition & placement for a balanced coastal artwork' },
+  { icon: '🎨', text: 'Color coordination — sand, surf and foam blending' },
+  { icon: '💡', text: 'Creating depth and dimension in textured canvas art' },
+  { icon: '🏆', text: 'Finishing touches for a display-worthy masterpiece' },
 ];
 
 const SESSION_FLOW = [
-  { time: '15 min', title: 'Welcome & Materials', desc: 'Introduction and material overview', icon: '🎨' },
-  { time: '30 min', title: 'Live Demonstration', desc: 'Learn how a 3D artwork comes together step by step', icon: '👁' },
+  { time: '15 min', title: 'Welcome & Coffee', desc: 'Settle in with a complimentary coffee and meet the group', icon: '☕' },
+  { time: '20 min', title: 'Choose & Demo', desc: 'Pick your coastal design and watch a live demonstration', icon: '👁' },
   { time: '90 min', title: 'Your Canvas', desc: 'Guided hands-on painting with direct feedback', icon: '🎨' },
-  { time: '15 min', title: 'Reveal & Q&A', desc: 'See your work, photograph it, questions answered', icon: '✨' },
+  { time: '15 min', title: 'Reveal & Photos', desc: 'See your finished piece, photograph it, questions answered', icon: '✨' },
 ];
 
 const INCLUDES = [
+  { icon: '🌊', text: 'Choice of 1 of 3 exclusive coastal sea-wave designs' },
+  { icon: '🎨', text: 'All premium paints, palette knives, brushes & tools' },
+  { icon: '☕', text: 'Complimentary coffee — on us' },
   { icon: '🖼', text: 'Take-home original canvas (yours to keep)' },
-  { icon: '🎨', text: 'All paints, palette knives, brushes & tools' },
-  { icon: '📸', text: 'Photography time at the end' },
-  { icon: '📖', text: 'Technique reference card to take home' },
 ];
 
 const ART_TOOLS = ['🎨', '🖌️', '✂️', '🖼', '✨', '🪡', '🖍️', '🎭'];
@@ -58,8 +65,8 @@ const MOMENTS = [
 
 const FORM_URL = 'https://forms.gle/8ojrtC6Ls9YQNPqDA';
 
-// Flip to true once the 19th July venue & theme are confirmed to re-open registration.
-const REGISTRATION_OPEN = false;
+// Venue & theme confirmed — registration is open.
+const REGISTRATION_OPEN = true;
 const WAITLIST_MAILTO =
   'mailto:theartrobe12@gmail.com?subject=Workshop%20Waitlist%20%E2%80%94%2019th%20July&body=Hi%20Jahnvi%2C%20I%27d%20like%20to%20join%20the%20waitlist%20for%20the%2019th%20July%20workshop.';
 
@@ -99,10 +106,10 @@ export default function WorkshopPage() {
       >
         <div>
           <span style={{ fontFamily: 'var(--serif)', fontSize: '1.1rem', color: '#fff', fontStyle: 'italic' }}>
-            The Art Experience
+            Texture Art Workshop
           </span>
           <span style={{ fontFamily: 'var(--sans)', fontSize: '0.72rem', color: 'rgba(255,255,255,0.6)', marginLeft: '0.75rem' }}>
-            19 Jul · Venue announced soon
+            19 Jul · NBC, New Palasia · ₹599
           </span>
         </div>
         <button
@@ -156,7 +163,7 @@ export default function WorkshopPage() {
             letterSpacing: '0.22em', textTransform: 'uppercase',
             color: 'var(--green)', marginBottom: '1rem',
           }}>
-            ✦ Hands-on Workshop · Indore ✦
+            ✦ Coffee, Conversations &amp; Coastal Art · Indore ✦
           </p>
 
           {/* Pulsating heading */}
@@ -177,7 +184,7 @@ export default function WorkshopPage() {
               marginBottom: '0.2rem',
             }}
           >
-            The Art Experience
+            Texture Art Workshop
           </motion.h1>
 
           <motion.p
@@ -198,7 +205,7 @@ export default function WorkshopPage() {
               marginBottom: '1.8rem',
             }}
           >
-            Create, connect &amp; take home your masterpiece
+            Coffee, conversations &amp; coastal art
           </motion.p>
 
           <p style={{
@@ -206,14 +213,14 @@ export default function WorkshopPage() {
             fontStyle: 'italic', color: 'rgba(247,245,239,0.7)',
             lineHeight: 1.6, maxWidth: '44ch', margin: '0 auto 0.6rem',
           }}>
-            An immersive hands-on art workshop with Jahnvi
+            A relaxed Sunday evening of creativity, coffee &amp; coastal vibes with Jahnvi
           </p>
           <p style={{
             fontFamily: 'var(--sans)', fontSize: '0.9rem',
             color: 'rgba(247,245,239,0.55)', lineHeight: 1.8,
             maxWidth: '40ch', margin: '0 auto 2.5rem',
           }}>
-            Leave with original artwork built by you, layer by layer.
+            Paint your own coastal sea-wave canvas — no experience needed. Beginner friendly.
           </p>
 
           <div style={{ display: 'flex', gap: '0.8rem', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -278,6 +285,70 @@ export default function WorkshopPage() {
               </Card>
             );
           })}
+        </div>
+      </section>
+
+      {/* ── Choose your design ── */}
+      <section style={{ padding: '3.5rem 1.25rem', background: 'var(--cream)', borderTop: '1px solid var(--border)' }}>
+        <Reveal>
+          <p style={{
+            fontFamily: 'var(--sans)', fontSize: '0.6rem',
+            letterSpacing: '0.2em', textTransform: 'uppercase',
+            color: 'var(--green-dk)', marginBottom: '0.5rem', textAlign: 'center',
+          }}>✦ Choose Your Artwork</p>
+        </Reveal>
+        <Reveal delay={0.06}>
+          <h2 style={{
+            fontFamily: 'var(--serif)', fontSize: 'clamp(1.9rem, 6vw, 2.8rem)',
+            fontWeight: 300, color: 'var(--text)', lineHeight: 1.15,
+            letterSpacing: '-0.01em', marginBottom: '0.7rem', textAlign: 'center',
+          }}>
+            Three Coastal <em style={{ color: 'var(--green-dk)' }}>Designs</em>
+          </h2>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <p style={{
+            fontFamily: 'var(--sans)', fontSize: '0.9rem',
+            color: 'var(--muted)', lineHeight: 1.7,
+            maxWidth: '46ch', margin: '0 auto 2.2rem', textAlign: 'center',
+          }}>
+            Pick one of three exclusive sea-wave designs on the day and bring it to life with premium texture techniques.
+          </p>
+        </Reveal>
+        <div style={{
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '1.2rem', maxWidth: '760px', margin: '0 auto',
+        }}>
+          {DESIGNS.map((d, i) => (
+            <motion.div
+              key={d.name}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.55, delay: i * 0.1 }}
+              style={{
+                background: 'var(--off-white)', borderRadius: '10px', overflow: 'hidden',
+                boxShadow: '0 4px 18px rgba(0,0,0,0.08)',
+              }}
+            >
+              <img
+                src={d.img}
+                alt={`${d.name} — coastal texture design`}
+                loading="lazy"
+                style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', display: 'block' }}
+              />
+              <div style={{ padding: '1rem 1.1rem 1.2rem' }}>
+                <h3 style={{
+                  fontFamily: 'var(--serif)', fontSize: '1.15rem', fontWeight: 400,
+                  color: 'var(--text)', marginBottom: '0.3rem',
+                }}>{d.name}</h3>
+                <p style={{
+                  fontFamily: 'var(--sans)', fontSize: '0.82rem',
+                  color: 'var(--muted)', lineHeight: 1.55,
+                }}>{d.desc}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
@@ -756,7 +827,7 @@ export default function WorkshopPage() {
             fontFamily: 'var(--sans)', fontSize: '0.88rem',
             color: 'rgba(247,245,239,0.5)', marginBottom: '2rem',
           }}>
-            19th July, Saturday · Indore · Venue &amp; theme announced soon
+            Sunday, 19th July · 4 PM onwards · NBC, New Palasia, Indore · ₹599
           </p>
         </Reveal>
         <Reveal delay={0.1}>
