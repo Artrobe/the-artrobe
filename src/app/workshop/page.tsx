@@ -30,13 +30,6 @@ const WHAT_YOU_LEARN = [
   { icon: '🏆', text: 'Finishing touches for a display-worthy masterpiece' },
 ];
 
-const SESSION_FLOW = [
-  { time: '15 min', title: 'Welcome & Coffee', desc: 'Settle in with a complimentary coffee and meet the group', icon: '☕' },
-  { time: '20 min', title: 'Choose & Demo', desc: 'Pick your coastal design and watch a live demonstration', icon: '👁' },
-  { time: '90 min', title: 'Your Canvas', desc: 'Guided hands-on painting with direct feedback', icon: '🎨' },
-  { time: '15 min', title: 'Reveal & Photos', desc: 'See your finished piece, photograph it, questions answered', icon: '✨' },
-];
-
 const INCLUDES = [
   { icon: '🌊', text: 'Choice of 1 of 3 exclusive coastal sea-wave designs' },
   { icon: '🎨', text: 'All premium paints, palette knives, brushes & tools' },
@@ -526,60 +519,6 @@ export default function WorkshopPage() {
             🎨 {REGISTRATION_OPEN ? 'Join the Workshop' : 'Join the Waitlist'}
           </motion.button>
         </Reveal>
-      </section>
-
-      {/* ── How it works ── */}
-      <section style={{ padding: '3.5rem 1.25rem', background: 'var(--cream)', borderTop: '1px solid var(--border)' }}>
-        <Reveal>
-          <p style={{
-            fontFamily: 'var(--sans)', fontSize: '0.6rem',
-            letterSpacing: '0.18em', textTransform: 'uppercase',
-            color: 'var(--green-dk)', marginBottom: '0.4rem',
-          }}>The Session</p>
-        </Reveal>
-        <Reveal delay={0.06}>
-          <h2 style={{
-            fontFamily: 'var(--serif)', fontSize: 'clamp(1.9rem, 6vw, 2.8rem)',
-            fontWeight: 300, color: 'var(--text)', lineHeight: 1.15,
-            letterSpacing: '-0.01em', marginBottom: '2rem', maxWidth: '30ch',
-          }}>
-            How It <em style={{ color: 'var(--green-dk)' }}>Works</em>
-          </h2>
-        </Reveal>
-        <div style={{ display: 'grid', gap: '1.2rem', maxWidth: '520px' }}>
-          {SESSION_FLOW.map((s, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              style={{
-                display: 'grid', gridTemplateColumns: '52px 1fr', gap: '1rem',
-                alignItems: 'start', paddingBottom: '1.2rem',
-                borderBottom: i < SESSION_FLOW.length - 1 ? '1px solid var(--border)' : 'none',
-              }}
-            >
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '1.5rem', marginBottom: '0.2rem' }}>{s.icon}</div>
-                <div style={{
-                  fontFamily: 'var(--serif)', fontSize: '0.85rem',
-                  color: 'var(--green-dk)', lineHeight: 1.2,
-                }}>{s.time}</div>
-              </div>
-              <div>
-                <h3 style={{
-                  fontFamily: 'var(--serif)', fontSize: '1.15rem', fontWeight: 400,
-                  color: 'var(--text)', marginBottom: '0.35rem',
-                }}>{s.title}</h3>
-                <p style={{
-                  fontFamily: 'var(--sans)', fontSize: '0.88rem',
-                  color: 'var(--muted)', lineHeight: 1.6,
-                }}>{s.desc}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </section>
 
       {/* ── Moments / photo wall ── */}
