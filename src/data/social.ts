@@ -9,6 +9,25 @@ export const INSTAGRAM_URL = 'https://www.instagram.com/the.artrobe';
 
 export const CONTACT_EMAIL = 'theartrobe12@gmail.com';
 
+// TODO: replace with the real WhatsApp business number (intl format, no +, no spaces).
+export const WHATSAPP_NUMBER = '910000000000';
+
+// Prefilled WhatsApp enquiry link builder.
+export const waEnquiry = (text: string) =>
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
+
+// TODO: replace with the real Google Form (or Formspree) endpoint for subscribe capture.
+// Google Form: use the /formResponse action URL; entry IDs below must match the form fields.
+export const SUBSCRIBE_FORM = {
+  action: 'https://docs.google.com/forms/d/e/REPLACE_WITH_FORM_ID/formResponse',
+  fields: {
+    name: 'entry.0000000001',
+    email: 'entry.0000000002',
+    phone: 'entry.0000000003',
+    city: 'entry.0000000004',
+  },
+};
+
 export const SOCIAL_LINKS = [
   { id: 'ig', label: 'Instagram', href: INSTAGRAM_PROFILE },
   { id: 'pt', label: 'Pinterest', href: 'https://pinterest.com/' },

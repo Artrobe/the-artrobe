@@ -10,10 +10,14 @@ import PageShell from '@/components/ui/PageShell';
 import Reveal from '@/components/ui/Reveal';
 import MagneticButton from '@/components/ui/MagneticButton';
 import InstagramReel from '@/components/InstagramReel';
+import DIYKits from '@/components/DIYKits';
+import Stories from '@/components/Stories';
+import ProcessPillars from '@/components/ProcessPillars';
 import type { Artwork } from '@/lib/airtable';
+import type { JournalSummary } from '@/lib/journal';
 import { HOME_REELS } from '@/data/social';
 
-export default function HomeClient({ artworks }: { artworks: Artwork[] }) {
+export default function HomeClient({ artworks, posts }: { artworks: Artwork[]; posts: JournalSummary[] }) {
   const [storyId, setStoryId] = useState<string | null>(null);
   const router = useRouter();
   const featured = artworks.filter(a => a.tag === 'Featured' || a.tag === 'New').slice(0, 4);
@@ -28,6 +32,10 @@ export default function HomeClient({ artworks }: { artworks: Artwork[] }) {
         />
         <StatsBar />
         <FeaturedWorks artworks={featuredOrAll} onOpenStory={setStoryId} />
+
+        <ProcessPillars />
+
+        <DIYKits />
 
         {/* ── Workshop promo banner ── */}
         <section
@@ -92,6 +100,8 @@ export default function HomeClient({ artworks }: { artworks: Artwork[] }) {
             </Reveal>
           </div>
         </section>
+
+        <Stories posts={posts} />
 
         {/* ── In Motion (Instagram reels) ── */}
         <section style={{ padding: 'clamp(3rem, 8vw, 4.5rem) 1.25rem', background: 'var(--off-white)', borderTop: '1px solid var(--border)' }}>

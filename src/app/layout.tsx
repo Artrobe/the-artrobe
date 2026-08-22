@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import '../styles/globals.css';
 import { INSTAGRAM_URL } from '@/data/social';
+import SubscribePopup from '@/components/SubscribePopup';
 
 export const metadata: Metadata = {
   title: 'The Artrobe',
@@ -49,7 +50,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <SubscribePopup />
+      </body>
     </html>
   );
 }
