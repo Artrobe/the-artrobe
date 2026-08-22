@@ -29,7 +29,7 @@ export default function Footer() {
           <p style={{ fontFamily: 'var(--serif)', fontSize: '1.4rem', fontWeight: 400, color: 'var(--text)' }}>The Artrobe</p>
         </div>
         <p style={{ fontFamily: 'var(--sans)', fontSize: '0.8rem', color: 'var(--muted)', lineHeight: 1.7, maxWidth: '36ch' }}>
-          Original art · Handcrafted · Indore, India. A creative studio exploring form, stillness, and the quiet language of colour.
+          Original art · Handcrafted · Indore, India. Workshops across Indore, Bangalore, Pune and Mumbai — shipping worldwide.
         </p>
       </div>
 

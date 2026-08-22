@@ -8,6 +8,7 @@ import CursorSpotlight from '@/components/ui/CursorSpotlight';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import ScanBot from '@/components/ScanBot';
 import { SCAN_ENABLED } from '@/data/features';
+import Reach from '@/components/Reach';
 
 interface Props {
   children: ReactNode;
@@ -28,6 +29,7 @@ export default function PageShell({ children, hideFooter }: Props) {
         style={{ paddingTop: 'var(--nav-h)', paddingBottom: 'var(--bottom-nav-h)', position: 'relative', zIndex: 2 }}
       >
         {children}
+        {!hideFooter && <Reach />}
         {!hideFooter && <Footer />}
       </motion.main>
       <BottomNav />

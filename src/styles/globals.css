@@ -556,3 +556,23 @@ input[type='text']::-webkit-search-cancel-button {
   padding-bottom: 0.06em; margin-right: 0.26em; }
 .hero-word { display: inline-block; will-change: transform; }
 @media (prefers-reduced-motion: reduce) { .hero-word { transform: none !important; } }
+
+/* ── Reach / locations ── */
+.reach-sec { padding: clamp(3rem, 8vw, 5rem) 1.25rem; background: var(--off-white);
+  border-top: 1px solid var(--border); }
+.reach-wrap { max-width: 1000px; margin: 0 auto; text-align: center; }
+.reach-eyebrow { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--muted); margin-bottom: 0.9rem; }
+.reach-title { font-family: var(--serif); font-weight: 400; letter-spacing: -0.02em;
+  font-size: clamp(1.9rem, 5.5vw, 3.2rem); line-height: 1.08; margin: 0 0 1.8rem; }
+.reach-title em { font-style: italic; color: var(--green-dk); }
+.reach-cities { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center;
+  margin-bottom: 1.6rem; }
+.reach-city { display: inline-flex; align-items: center; gap: 0.4rem;
+  font-family: var(--sans); font-size: 0.82rem; color: var(--text);
+  border: 1px solid var(--border); background: #fff; border-radius: 999px;
+  padding: 0.5rem 1.1rem; transition: border-color .25s, transform .25s, color .25s; }
+.reach-city:hover { border-color: var(--green-dk); color: var(--green-dk); transform: translateY(-2px); }
+.reach-pin { display: flex; color: var(--green-dk); }
+.reach-note { font-family: var(--sans); font-weight: 300; font-size: 0.9rem;
+  line-height: 1.75; color: var(--muted); max-width: 52ch; margin: 0 auto; }

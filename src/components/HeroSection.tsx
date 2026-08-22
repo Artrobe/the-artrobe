@@ -52,7 +52,7 @@ export default function HeroSection({ onViewCollection, heroImages }: Props) {
             textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '1.1rem',
           }}
         >
-          Original art · Handcrafted · Indore
+          Original art · Handcrafted · Paintings
         </motion.p>
 
         <h1
