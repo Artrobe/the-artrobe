@@ -303,9 +303,15 @@ input[type='text']::-webkit-search-cancel-button {
 /* ── from WhatsAppWidget.tsx ── */
 .wa-root { position: fixed; right: 1.5rem; z-index: 500;
   bottom: calc(var(--bottom-nav-h) + 1rem); }
-/* On phones the bottom nav carries WhatsApp, so the floating button would
-   duplicate it — show the float only where there is no bottom nav. */
-@media (max-width: 767px) { .wa-root { display: none; } }
+/* Shown on phones too: the bottom-nav tab opens WhatsApp directly, while this
+   button opens the topic panel. Sits clear of the nav bar. */
+@media (max-width: 767px) {
+  .wa-root { right: 1rem; bottom: calc(var(--bottom-nav-h) + 0.75rem); }
+  .wa-btn { width: 50px; height: 50px; }
+  /* panel must not run under the nav or off-screen */
+  .wa-panel { bottom: 58px; max-height: calc(100svh - var(--nav-h) - var(--bottom-nav-h) - 5rem);
+    overflow-y: auto; }
+}
 .wa-btn { position: relative; width: 56px; height: 56px; border-radius: 999px; border: none;
   background: #25D366; color: #fff; cursor: pointer; display: flex;
   align-items: center; justify-content: center;
