@@ -13,6 +13,9 @@ import InstagramReel from '@/components/InstagramReel';
 import DIYKits from '@/components/DIYKits';
 import Stories from '@/components/Stories';
 import ProcessPillars from '@/components/ProcessPillars';
+import ClientWork from '@/components/ClientWork';
+import Marquee from '@/components/Marquee';
+import Reviews from '@/components/Reviews';
 import type { Artwork } from '@/lib/airtable';
 import type { JournalSummary } from '@/lib/journal';
 import { HOME_REELS } from '@/data/social';
@@ -20,18 +23,47 @@ import { HOME_REELS } from '@/data/social';
 export default function HomeClient({ artworks, posts }: { artworks: Artwork[]; posts: JournalSummary[] }) {
   const [storyId, setStoryId] = useState<string | null>(null);
   const router = useRouter();
-  const featured = artworks.filter(a => a.tag === 'Featured' || a.tag === 'New').slice(0, 4);
-  const featuredOrAll = featured.length ? featured : artworks.slice(0, 4);
+  // Explicit running order — tag filtering alone just returns whatever sits
+  // first in the data file, which buries newly added work.
+  const FEATURED_IDS = [
+    'ocean-shore-round', 'shringar-ganesh-maroon', 'lotus-maiden-flat',
+    'mahakal-rudraksha', 'shawl-kali', 'pichwai-lotus-pink',
+    'sea-shore-texture', 'nandi-shivling',
+  ];
+  const picked = FEATURED_IDS
+    .map(id => artworks.find(a => a.id === id))
+    .filter((a): a is Artwork => Boolean(a));
+  const featuredOrAll = picked.length ? picked : artworks.slice(0, 4);
+
+  // Hero is a full-bleed background: only pieces that survive an edge-to-edge
+  // crop belong here. Easel shots and the wall mural do not.
+  // Hero now shows each piece whole (object-fit: contain), so portrait and
+  // round works belong here too — no longer limited to crop-safe images.
+  const HERO_IDS = [
+    'ocean-shore-round', 'lotus-maiden-flat', 'sea-shore-texture',
+    'nandi-shivling', 'pearl-blossom', 'pichwai-lotus-pink',
+    'cobalt-wave-round', 'soft-power',
+  ];
+  const heroSlides = HERO_IDS
+    .map(id => artworks.find(a => a.id === id))
+    .filter((a): a is Artwork => Boolean(a))
+    .map(a => ({ img: a.img, title: a.title }));
 
   return (
     <>
       <PageShell>
         <HeroSection
           onViewCollection={() => router.push('/gallery')}
-          heroImages={artworks.map(a => ({ img: a.img, title: a.title }))}
+          heroImages={heroSlides}
         />
+        <Marquee />
+
         <StatsBar />
         <FeaturedWorks artworks={featuredOrAll} onOpenStory={setStoryId} />
+
+        <Reviews />
+
+        <ClientWork />
 
         <ProcessPillars />
 

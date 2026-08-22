@@ -206,3 +206,353 @@ input[type='text']::-webkit-search-cancel-button {
   .hero-slide-title { display: block; }
   .hero-arrow { display: flex !important; }
 }
+
+/* ── Hero (split editorial layout) ── */
+.hero-split {
+  display: grid; align-items: center;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  padding: clamp(2.5rem, 7vw, 5.5rem) 1.25rem clamp(3rem, 8vw, 5rem);
+  background:
+    radial-gradient(120% 90% at 12% 8%, rgba(168,197,160,0.32) 0%, rgba(168,197,160,0) 58%),
+    radial-gradient(95% 85% at 92% 96%, rgba(212,232,208,0.45) 0%, rgba(212,232,208,0) 62%),
+    var(--off-white);
+  border-bottom: 1px solid var(--border);
+}
+.hero-copy { max-width: 34rem; }
+.hero-stage {
+  position: relative; width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  min-height: min(62vh, 460px);
+}
+/* soft pool of light behind the work — reads as a lit wall */
+.hero-stage::before {
+  content: ''; position: absolute; inset: 4% 2% 2%;
+  background: radial-gradient(58% 52% at 50% 44%,
+    rgba(255,255,255,0.85) 0%, rgba(247,245,239,0.45) 45%, rgba(247,245,239,0) 72%);
+  filter: blur(6px); pointer-events: none;
+}
+.hero-stage:hover .hero-art { transform: translate(-50%, calc(-50% - 4px)) scale(1.012); }
+.hero-art {
+  /* stacked so the outgoing and incoming slides can cross-fade in place
+     without either one pushing the layout during the overlap */
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 100%; max-height: min(62vh, 460px);
+  width: auto; height: auto; display: block;
+  object-fit: contain;
+  /* No mat or frame: several works are round and photographed on white, so a
+     padded frame reads as a white box. drop-shadow follows the alpha silhouette,
+     which gives round pieces a real cast shadow instead of a rectangular one. */
+  filter:
+    drop-shadow(0 2px 3px rgba(42,42,42,0.20))
+    drop-shadow(0 18px 34px rgba(58,74,54,0.22))
+    drop-shadow(0 40px 70px rgba(58,74,54,0.13));
+  transition: transform .8s cubic-bezier(.22,1,.36,1), filter .8s ease;
+}
+.hero-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 38px; height: 38px; border-radius: 999px;
+  border: 1px solid var(--border); background: rgba(255,255,255,0.85);
+  color: var(--text); cursor: pointer; font-size: 1rem; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  backdrop-filter: blur(6px); transition: border-color .2s, transform .2s;
+}
+.hero-nav { color: var(--green-dk); }
+.hero-nav:hover { border-color: var(--green-dk); background: var(--green-dk); color: #fff;
+  transform: translateY(-50%) scale(1.06); }
+.hero-dots { display: none; }
+.hero-dot {
+  width: 6px; height: 6px; border-radius: 999px; border: none; padding: 0;
+  background: var(--border); cursor: pointer; transition: background .3s, width .3s;
+}
+.hero-dot[data-on="1"] { background: var(--green-dk); width: 18px; }
+@media (min-width: 900px) {
+  .hero-split {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    padding: clamp(3rem, 6vw, 6rem) clamp(2rem, 5vw, 4.5rem);
+    min-height: calc(100svh - var(--nav-h) - var(--bottom-nav-h));
+    max-width: 1500px; margin: 0 auto;
+  }
+  .hero-art { max-height: min(74vh, 620px); }
+  .hero-stage { min-height: min(74vh, 620px); }
+}
+
+/* ── from FeaturedWorks.tsx ── */
+.feat-rail { display: flex; gap: 0.9rem; overflow-x: auto; padding-bottom: 0.5rem;
+  scroll-snap-type: x mandatory; scroll-padding: 0 1.25rem; }
+.feat-rail > * { flex: 0 0 180px; }
+@media (min-width: 700px)  { .feat-rail { gap: 1.25rem; } .feat-rail > * { flex: 0 0 240px; } }
+@media (min-width: 1100px) {
+  .feat-rail { overflow-x: visible; display: grid;
+    grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+    max-width: 1200px; margin: 0 auto; }
+  .feat-rail > * { flex: none; }
+}
+
+/* ── from ProcessPillars.tsx ── */
+@media (max-width: 640px) {
+  .pillar-body { display: none; }
+}
+
+/* ── from GalleryGrid.tsx ── */
+.art-masonry { columns: 2; column-gap: 0.75rem; padding: 1rem 1rem 2rem; }
+  @media (min-width: 700px)  { .art-masonry { columns: 3; column-gap: 1rem; padding: 1.5rem 1.5rem 3rem; } }
+  @media (min-width: 1100px) { .art-masonry { columns: 4; column-gap: 1.25rem; max-width: 1400px; margin: 0 auto; } }
+
+/* ── from WhatsAppWidget.tsx ── */
+.wa-root { position: fixed; right: 1.5rem; z-index: 500;
+  bottom: calc(var(--bottom-nav-h) + 1rem); }
+/* On phones the bottom nav carries WhatsApp, so the floating button would
+   duplicate it — show the float only where there is no bottom nav. */
+@media (max-width: 767px) { .wa-root { display: none; } }
+.wa-btn { position: relative; width: 56px; height: 56px; border-radius: 999px; border: none;
+  background: #25D366; color: #fff; cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  box-shadow: 0 6px 20px rgba(37,211,102,.40);
+  animation: wa-breathe 2.4s ease-in-out infinite;
+  transition: transform .2s; }
+.wa-btn:hover { transform: scale(1.08); animation-play-state: paused; }
+/* expanding halo — two rings offset so the pulse never fully stops */
+.wa-btn::before,
+.wa-btn::after {
+  content: ''; position: absolute; inset: 0; border-radius: 999px;
+  border: 2px solid #25D366; pointer-events: none;
+  animation: wa-ring 2.4s cubic-bezier(.22,1,.36,1) infinite;
+}
+.wa-btn::after { animation-delay: 1.2s; }
+/* hover label — slides out from behind the button */
+.wa-tag {
+  position: absolute; right: calc(100% + 10px); top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  white-space: nowrap; pointer-events: none;
+  background: var(--text); color: var(--off-white);
+  font-family: var(--sans); font-size: 0.74rem; font-weight: 400;
+  letter-spacing: 0.04em; padding: 0.42rem 0.8rem; border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(42,42,42,0.22);
+  opacity: 0; transition: opacity .25s ease, transform .3s cubic-bezier(.22,1,.36,1);
+}
+/* little arrow pointing at the button */
+.wa-tag::after {
+  content: ''; position: absolute; left: 100%; top: 50%;
+  transform: translateY(-50%);
+  border: 5px solid transparent; border-left-color: var(--text);
+}
+.wa-btn:hover .wa-tag,
+.wa-btn:focus-visible .wa-tag { opacity: 1; transform: translateY(-50%) translateX(0); }
+/* no hover on touch — the label would stick after a tap */
+@media (pointer: coarse) { .wa-tag { display: none; } }
+
+@keyframes wa-breathe {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.07); }
+}
+@keyframes wa-ring {
+  0%   { transform: scale(1);   opacity: .55; }
+  70%  { transform: scale(1.9); opacity: 0; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-btn { animation: none; }
+  .wa-btn::before, .wa-btn::after { animation: none; opacity: 0; }
+}
+.wa-panel { position: absolute; bottom: 64px; right: 0; width: min(88vw, 310px);
+  background: #fff; border: 1px solid var(--border); border-radius: 12px;
+  box-shadow: 0 18px 44px rgba(42,42,42,.18); overflow: hidden; }
+.wa-head { background: var(--green-dk); color: #fff; padding: .85rem 1rem; }
+.wa-topic { display: block; width: 100%; text-align: left; padding: .62rem .85rem;
+  border: none; border-bottom: 1px solid var(--border); background: #fff;
+  font: 300 .82rem/1.4 var(--sans); color: var(--text); cursor: pointer;
+  transition: background .15s; text-decoration: none; }
+.wa-topic:hover { background: var(--cream); }
+.wa-nudge { position: absolute; bottom: 6px; right: 62px; white-space: nowrap;
+  background: #fff; border: 1px solid var(--border); border-radius: 999px;
+  padding: .45rem .85rem; font: 300 .76rem var(--sans); color: var(--text);
+  box-shadow: 0 6px 18px rgba(42,42,42,.12); display: flex; gap: .5rem; align-items: center; }
+
+/* ── Google reviews ── */
+.rev-sec { padding: clamp(3.5rem, 9vw, 6rem) 1.25rem; background: var(--off-white); border-top: 1px solid var(--border); }
+.rev-wrap { max-width: 1100px; margin: 0 auto; }
+.rev-eyebrow { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.8rem; }
+.rev-head { display: flex; flex-wrap: wrap; gap: 1rem; align-items: baseline; justify-content: space-between; margin-bottom: clamp(1.8rem, 4vw, 2.6rem); }
+.rev-title { font-family: var(--serif); font-weight: 400; font-size: clamp(1.7rem, 4.6vw, 2.8rem); line-height: 1.1; letter-spacing: -0.02em; margin: 0; max-width: 22ch; }
+.rev-link { font-family: var(--sans); font-size: 0.8rem; color: var(--green-dk); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
+.rev-link:hover { border-bottom-color: var(--green-dk); }
+/* Mobile: swipe rail — six stacked cards is far too much scrolling for
+   content people skim. Desktop keeps the grid. */
+.rev-grid { display: flex; gap: 0.85rem; overflow-x: auto; scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch; padding-bottom: 0.5rem;
+  margin: 0 -1.25rem; padding-left: 1.25rem; padding-right: 1.25rem;
+  scrollbar-width: none; }
+.rev-grid::-webkit-scrollbar { display: none; }
+.rev-grid > * { flex: 0 0 min(80vw, 300px); scroll-snap-align: start; }
+@media (min-width: 700px) {
+  .rev-grid { display: grid; gap: 1.1rem; grid-template-columns: repeat(2, 1fr);
+    overflow: visible; margin: 0; padding: 0; }
+  .rev-grid > * { flex: none; }
+}
+@media (min-width: 1050px) { .rev-grid { grid-template-columns: repeat(3, 1fr); } }
+.rev-card { position: relative; margin: 0; border-radius: 12px; overflow: hidden;
+  padding: 1.5rem 1.25rem 1.2rem; display: flex; flex-direction: column; height: 100%;
+  border: 1px solid var(--border);
+  /* warm paper ground with a wash of the reviewer's accent in one corner */
+  background:
+    radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, var(--rev-accent) 12%, transparent) 0%, transparent 58%),
+    linear-gradient(168deg, #FFFDF8 0%, var(--off-white) 62%, var(--cream) 100%);
+  box-shadow: 0 1px 2px rgba(42,42,42,0.05), 0 10px 26px rgba(42,42,42,0.05);
+  transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease; }
+/* coloured spine, like a bookmark down the left edge */
+.rev-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--rev-accent); opacity: 0.55; }
+.rev-card:hover { transform: translateY(-4px);
+  box-shadow: 0 2px 4px rgba(42,42,42,0.06), 0 20px 40px rgba(58,74,54,0.14); }
+.rev-card:hover::before { opacity: 0.95; }
+/* oversized serif quote mark sitting behind the text */
+.rev-quote { position: absolute; top: 0.35rem; right: 0.9rem;
+  font-family: var(--serif); font-size: 4.5rem; line-height: 1;
+  color: var(--rev-accent); opacity: 0.13; pointer-events: none; user-select: none; }
+
+/* header row: avatar · name/date · google mark */
+.rev-top { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 0.7rem; }
+.rev-avatar { width: 36px; height: 36px; border-radius: 999px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--sans); font-size: 0.95rem; font-weight: 500; color: #fff; }
+.rev-who { display: flex; flex-direction: column; gap: 0.1rem; min-width: 0; flex-grow: 1; }
+.rev-g { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.9; }
+/* keep mobile cards short: clamp the quote, full text on desktop */
+@media (max-width: 699px) {
+  .rev-text { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical;
+    overflow: hidden; font-size: 0.86rem; }
+}
+.rev-stars { color: #FBBC05; font-size: 0.82rem; letter-spacing: 0.14em; margin-bottom: 0.55rem; }
+.rev-text { font-family: var(--sans); font-weight: 300; font-size: 0.88rem; line-height: 1.68;
+  color: #3C3C3C; margin: 0; flex-grow: 1; }
+.rev-name { font-family: var(--sans); font-size: 0.84rem; color: var(--text); font-weight: 400;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rev-when { font-family: var(--sans); font-size: 0.68rem; color: var(--muted); }
+
+/* ── DIY kits (editorial ladder) ── */
+.kit-sec { padding: clamp(3.5rem, 9vw, 6rem) 1.25rem; background: var(--cream); border-top: 1px solid var(--border); }
+.kit-wrap { max-width: 1100px; margin: 0 auto; }
+.kit-intro { max-width: 46rem; margin-bottom: clamp(2rem, 5vw, 3.2rem); }
+.kit-eyebrow { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.8rem; }
+.kit-title { font-family: var(--serif); font-weight: 400; font-size: clamp(1.9rem, 5.5vw, 3.2rem); line-height: 1.06; letter-spacing: -0.02em; margin: 0 0 1rem; }
+.kit-title em { font-style: italic; color: var(--green-dk); }
+.kit-lede { font-family: var(--sans); font-weight: 300; font-size: 0.95rem; line-height: 1.75; color: var(--muted); max-width: 52ch; margin: 0; }
+.kit-list { list-style: none; margin: 0; padding: 0; }
+.kit-row { display: grid; grid-template-columns: auto 84px 1fr; grid-template-areas: "num thumb body" ". . buy";
+  gap: 0.9rem 1rem; align-items: center; padding: 1.1rem 0; border-top: 1px solid var(--border); }
+.kit-list > li:last-child .kit-row { border-bottom: 1px solid var(--border); }
+.kit-num { grid-area: num; font-family: var(--sans); font-variant-numeric: tabular-nums; font-size: clamp(1.1rem, 4vw, 1.7rem); color: var(--green-lt); line-height: 1; }
+.kit-thumb { grid-area: thumb; width: 84px; height: 84px; border-radius: 4px; overflow: hidden;
+  background: var(--off-white); position: relative; padding: 0; border: 1px solid var(--border);
+  cursor: zoom-in; display: block; transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s; }
+.kit-thumb:hover { transform: scale(1.04); box-shadow: 0 8px 20px rgba(58,74,54,0.18); }
+.kit-thumb img { transition: transform .5s cubic-bezier(.22,1,.36,1); }
+.kit-thumb:hover img { transform: scale(1.08); }
+.kit-zoom { position: absolute; right: 4px; bottom: 4px; width: 18px; height: 18px;
+  border-radius: 999px; background: rgba(42,42,42,0.55); color: #fff; font-size: 0.7rem;
+  line-height: 18px; text-align: center; opacity: 0; transition: opacity .25s; }
+.kit-thumb:hover .kit-zoom { opacity: 1; }
+
+/* kit lightbox */
+.kit-lb { position: fixed; inset: 0; z-index: 90; background: rgba(20,20,18,0.9);
+  display: flex; align-items: center; justify-content: center; padding: 1.5rem; cursor: zoom-out; }
+.kit-lb-inner { margin: 0; max-width: min(92vw, 760px); cursor: default;
+  background: var(--off-white); border-radius: 8px; overflow: hidden;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.45); }
+.kit-lb-inner img { display: block; width: 100%; height: auto; }
+.kit-lb-inner figcaption { display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; padding: 0.85rem 1.1rem; font-family: var(--serif); font-size: 1.05rem; }
+.kit-lb-inner figcaption button { border: none; background: none; font-size: 1.5rem;
+  line-height: 1; color: var(--muted); cursor: pointer; padding: 0 0.2rem; }
+.kit-lb-inner figcaption button:hover { color: var(--text); }
+.kit-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.kit-body { grid-area: body; min-width: 0; }
+.kit-head { display: flex; align-items: baseline; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.25rem; }
+.kit-name { font-family: var(--serif); font-weight: 400; font-size: clamp(1.05rem, 3vw, 1.4rem); margin: 0; }
+.kit-diff { font-family: var(--sans); font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; border: 1px solid; border-radius: 999px; padding: 0.1rem 0.5rem; }
+.kit-desc { font-family: var(--sans); font-weight: 300; font-size: 0.82rem; line-height: 1.65; color: var(--muted); margin: 0; max-width: 62ch; }
+.kit-buy { grid-area: buy; display: flex; align-items: center; gap: 1rem; }
+.kit-price { font-family: var(--serif); font-size: 1.25rem; color: var(--text); }
+.kit-cta { font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green-dk); text-decoration: none; border: 1px solid var(--green-dk); border-radius: 999px; padding: 0.45rem 1.1rem; transition: background .2s, color .2s; }
+.kit-cta:hover { background: var(--green-dk); color: #fff; }
+@media (min-width: 760px) {
+  .kit-row { grid-template-columns: 3rem 120px 1fr auto; grid-template-areas: "num thumb body buy"; gap: 1.5rem; padding: 1.4rem 0; }
+  .kit-thumb { width: 120px; height: 120px; }
+  .kit-buy { flex-direction: column; align-items: flex-end; gap: 0.6rem; }
+}
+
+/* ── Journal stories rail → grid ── */
+.story-rail { display: flex; gap: 1rem; overflow-x: auto; padding: 0 1.25rem 1rem;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+.story-rail > * { flex: 0 0 auto; width: min(78vw, 260px); }
+@media (min-width: 760px) {
+  .story-rail { display: grid; grid-template-columns: repeat(2, 1fr); overflow-x: visible;
+    gap: 1.25rem; max-width: 900px; margin: 0 auto; padding: 0 1.5rem 1rem; }
+  .story-rail > * { width: auto; }
+}
+@media (min-width: 1100px) {
+  .story-rail { grid-template-columns: repeat(3, 1fr); max-width: 1200px; gap: 1.5rem; }
+}
+
+/* ── Marquee strip ── */
+.mq { overflow: hidden; background: var(--green-dk); border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border); padding: 0.7rem 0; }
+.mq-track { display: flex; width: max-content; animation: mq-scroll 38s linear infinite; }
+.mq-item { display: inline-flex; align-items: center; gap: 1.6rem; padding-right: 1.6rem;
+  font-family: var(--sans); font-weight: 300; font-size: 0.74rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(247,245,239,0.92); white-space: nowrap; }
+.mq-dot { color: rgba(247,245,239,0.45); font-size: 0.6rem; }
+@keyframes mq-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.mq:hover .mq-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .mq-track { animation: none; } }
+
+
+/* ── Sticky section headings ── */
+.sticky-head { position: sticky; top: calc(var(--nav-h) + 0.5rem); z-index: 2;
+  background: linear-gradient(to bottom, var(--off-white) 70%, rgba(247,245,239,0)); }
+@media (prefers-reduced-motion: reduce) { .sticky-head { position: static; } }
+
+/* ── Page transition ── */
+.page-fade { animation: page-in 0.55s cubic-bezier(.22,1,.36,1) both; }
+@keyframes page-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .page-fade { animation: none; } }
+
+/* ── Cursor spotlight (desktop only) ── */
+.spotlight { position: fixed; top: 0; left: 0; width: 400px; height: 400px;
+  border-radius: 999px; pointer-events: none; z-index: 0; opacity: 0.5;
+  background: radial-gradient(circle, rgba(168,197,160,0.30) 0%, rgba(168,197,160,0) 68%);
+  mix-blend-mode: multiply; }
+@media (pointer: coarse), (prefers-reduced-motion: reduce) { .spotlight { display: none; } }
+
+/* ── WhatsApp tab in the mobile bottom nav ── */
+.bnav-wa { display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px; flex: 1; text-decoration: none; position: relative;
+  font-family: var(--sans); font-size: 0.56rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: #1F9D55; }
+.bnav-wa-icon { position: relative; display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 999px;
+  background: #25D366; color: #fff;
+  box-shadow: 0 2px 10px rgba(37,211,102,0.45);
+  animation: wa-breathe 2.4s ease-in-out infinite; }
+/* halo rings, offset so the pulse never fully stops */
+.bnav-wa-icon::before,
+.bnav-wa-icon::after {
+  content: ''; position: absolute; inset: 0; border-radius: 999px;
+  border: 2px solid #25D366; pointer-events: none;
+  animation: wa-ring 2.4s cubic-bezier(.22,1,.36,1) infinite;
+}
+.bnav-wa-icon::after { animation-delay: 1.2s; }
+.bnav-wa:active .bnav-wa-icon { transform: scale(0.94); }
+@media (prefers-reduced-motion: reduce) {
+  .bnav-wa-icon { animation: none; }
+  .bnav-wa-icon::before, .bnav-wa-icon::after { animation: none; opacity: 0; }
+}
+
+/* ── Hero headline: masked word reveal ── */
+.hero-line { display: block; }
+.hero-word-mask { display: inline-block; overflow: hidden; vertical-align: bottom;
+  padding-bottom: 0.06em; margin-right: 0.26em; }
+.hero-word { display: inline-block; will-change: transform; }
+@media (prefers-reduced-motion: reduce) { .hero-word { transform: none !important; } }

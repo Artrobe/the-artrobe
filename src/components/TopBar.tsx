@@ -100,13 +100,33 @@ export default function TopBar() {
           })}
         </nav>
       ) : (
-        <span style={{
-          fontFamily: 'var(--sans)', fontSize: '0.62rem',
-          letterSpacing: '0.16em', textTransform: 'uppercase',
-          color: 'var(--muted)',
-        }}>
-          {navLinks.find(l => l.href === path)?.label ?? 'Menu'}
-        </span>
+        // Mobile: the bottom nav has no Home tab, so put the way back here.
+        // On the home page itself there is nowhere to go — show the label.
+        path === '/' ? (
+          <span style={{
+            fontFamily: 'var(--sans)', fontSize: '0.62rem',
+            letterSpacing: '0.16em', textTransform: 'uppercase',
+            color: 'var(--muted)',
+          }}>
+            Home
+          </span>
+        ) : (
+          <Link
+            href="/"
+            style={{
+              display: 'flex', alignItems: 'center', gap: '0.35rem',
+              fontFamily: 'var(--sans)', fontSize: '0.62rem',
+              letterSpacing: '0.16em', textTransform: 'uppercase',
+              color: 'var(--green-dk)', textDecoration: 'none',
+            }}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M3.5 11.2 12 4l8.5 7.2M6 10v9h12v-9" stroke="currentColor"
+                strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Home
+          </Link>
+        )
       )}
     </motion.header>
   );

@@ -3,6 +3,13 @@ import { motion } from 'framer-motion';
 import PageShell from '@/components/ui/PageShell';
 import { INSTAGRAM_URL, INSTAGRAM_HANDLE } from '@/data/social';
 
+const TEXTURE_PIECES = [
+  { src: '/artworks/ocean-shore-round-thumb.webp', alt: 'Round textured canvas of a shoreline with sand and shells' },
+  { src: '/artworks/cobalt-wave-round-thumb.webp', alt: 'Round canvas with a cobalt impasto wave' },
+  { src: '/artworks/sea-shore-texture-thumb.webp', alt: 'Textured relief of surf meeting sand' },
+  { src: '/artworks/pearl-blossom-thumb.webp', alt: 'Textured blossom in white and gold with pearl detail' },
+];
+
 const ART_TOOLS = ['🎨', '🖌️', '✂️', '🖼', '✨', '🪡', '🖍️', '🎭'];
 
 export default function WorkshopPage() {
@@ -99,6 +106,59 @@ export default function WorkshopPage() {
             </motion.a>
           </div>
         </motion.div>
+      </section>
+
+      {/* ── What we make: texture pieces ── */}
+      <section style={{
+        padding: 'clamp(3.5rem, 9vw, 6rem) 1.25rem',
+        background: 'var(--off-white)',
+        borderTop: '1px solid var(--border)',
+      }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <p style={{
+            fontFamily: 'var(--sans)', fontSize: '0.68rem', letterSpacing: '0.18em',
+            textTransform: 'uppercase', color: 'var(--muted)', marginBottom: '0.8rem',
+          }}>
+            From the studio
+          </p>
+          <h2 style={{
+            fontFamily: 'var(--serif)', fontWeight: 400,
+            fontSize: 'clamp(1.8rem, 5vw, 3rem)', lineHeight: 1.1,
+            letterSpacing: '-0.02em', margin: '0 0 clamp(1.8rem, 4vw, 2.8rem)',
+            maxWidth: '18ch',
+          }}>
+            The kind of work you&apos;ll make.
+          </h2>
+
+          <div style={{
+            display: 'grid', gap: '1.25rem',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
+          }}>
+            {TEXTURE_PIECES.map((t, i) => (
+              <motion.figure
+                key={t.src}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                style={{
+                  margin: 0, background: '#fff', border: '1px solid var(--border)',
+                  borderRadius: '4px', overflow: 'hidden',
+                }}
+              >
+                <div style={{ aspectRatio: '1', background: 'var(--cream)', overflow: 'hidden' }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={t.src}
+                    alt={t.alt}
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+                  />
+                </div>
+              </motion.figure>
+            ))}
+          </div>
+        </div>
       </section>
     </PageShell>
   );

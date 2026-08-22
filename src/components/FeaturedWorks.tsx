@@ -25,12 +25,7 @@ export default function FeaturedWorks({ artworks, onOpenStory }: Props) {
           </p>
         </div>
       </Reveal>
-
-      <div style={{
-        display: 'flex', gap: '0.9rem', overflowX: 'auto',
-        paddingBottom: '0.5rem', scrollSnapType: 'x mandatory',
-        scrollPadding: '0 1.25rem',
-      }}>
+      <div className="feat-rail">
         {artworks.map((art, i) => (
           <motion.button
             key={art.id}
@@ -41,7 +36,7 @@ export default function FeaturedWorks({ artworks, onOpenStory }: Props) {
             transition={{ duration: 0.6, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
             whileHover={{ y: -6 }}
             style={{
-              flex: '0 0 180px', scrollSnapAlign: 'start',
+              scrollSnapAlign: 'start',
               cursor: 'pointer', border: 'none', background: 'transparent',
               padding: 0, textAlign: 'left', touchAction: 'manipulation',
             }}
@@ -57,7 +52,9 @@ export default function FeaturedWorks({ artworks, onOpenStory }: Props) {
                 whileHover={{ scale: 1.06 }}
                 transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                 style={{
-                  width: '100%', aspectRatio: '2/3', objectFit: 'cover', display: 'block',
+                  width: '100%',
+                  // uniform frame for the featured strip, but contain so nothing is cut off
+                  aspectRatio: '3/4', objectFit: 'contain', display: 'block',
                   background: 'linear-gradient(135deg, #c8dac4 0%, #e8d5c4 50%, #d4cbb8 100%)',
                 }}
               />

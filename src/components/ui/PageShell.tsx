@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import CursorSpotlight from '@/components/ui/CursorSpotlight';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import ScanBot from '@/components/ScanBot';
+import { SCAN_ENABLED } from '@/data/features';
 
 interface Props {
   children: ReactNode;
@@ -19,7 +20,7 @@ export default function PageShell({ children, hideFooter }: Props) {
       <CursorSpotlight />
       <TopBar />
       <ScrollProgress />
-      <ScanBot />
+      {SCAN_ENABLED && <ScanBot />}
       <motion.main
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

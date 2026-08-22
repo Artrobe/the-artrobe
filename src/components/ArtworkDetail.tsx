@@ -1,8 +1,10 @@
 'use client';
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import type { Artwork } from '@/lib/airtable';
+import { SCAN_ENABLED } from '@/data/features';
+import { track } from '@/lib/analytics';
 import MagneticButton from '@/components/ui/MagneticButton';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import TopBar from '@/components/TopBar';
@@ -13,6 +15,17 @@ interface Props { art: Artwork }
 const defaultHeadings = ['Origin', 'Form', 'Process', 'Colour', 'What Remains'];
 
 export default function ArtworkDetail({ art }: Props) {
+  // Which pieces actually get opened — the signal worth having.
+  useEffect(() => {
+    track('artwork_view', { artwork: art.title, style: art.style, medium: art.medium });
+  }, [art.title, art.style, art.medium]);
+
+  // Parallax: the artwork drifts slower than the story text beside it.
+  const reduceMotion = useReducedMotion();
+  const parallaxRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: parallaxRef, offset: ['start end', 'end start'] });
+  const artY = useTransform(scrollYProgress, [0, 1], reduceMotion ? ['0%', '0%'] : ['-3%', '6%']);
+
   const router = useRouter();
 
   // Share sheet
@@ -334,11 +347,13 @@ export default function ArtworkDetail({ art }: Props) {
           overflow: 'hidden',
         }}>
           <motion.div
+            ref={parallaxRef}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             onClick={openLightbox}
             style={{
+              y: artY,
               borderRadius: 4,
               overflow: 'hidden',
               boxShadow: '0 18px 44px rgba(42,42,42,0.20)',
@@ -350,9 +365,12 @@ export default function ArtworkDetail({ art }: Props) {
               src={art.img} alt={art.title}
               style={{
                 display: 'block',
-                width: '90vw',
-                height: 'auto',
+                // cap both axes so landscape and ultra-tall pieces both fit
+                maxWidth: 'min(90vw, 900px)',
                 maxHeight: 'calc(100dvh - 16rem)',
+                width: 'auto',
+                height: 'auto',
+                objectFit: 'contain',
               }}
             />
             <div style={{
@@ -497,7 +515,7 @@ export default function ArtworkDetail({ art }: Props) {
               }}
             >Enquire Now →</MagneticButton>
 
-            <MagneticButton
+            {SCAN_ENABLED && <MagneticButton
               onClick={() => { window.location.href = `/scan?id=${art.id}`; }}
               style={{
                 background: 'transparent', color: 'var(--text)',
@@ -506,7 +524,7 @@ export default function ArtworkDetail({ art }: Props) {
                 fontWeight: 400, letterSpacing: '0.1em', textTransform: 'uppercase',
                 cursor: 'pointer',
               }}
-            >📷 View on Your Wall</MagneticButton>
+            >📷 View on Your Wall</MagneticButton>}
           </div>
 
           <p style={{ fontFamily: 'var(--sans)', fontSize: '0.72rem', color: 'var(--muted)' }}>

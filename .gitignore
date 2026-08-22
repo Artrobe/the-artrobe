@@ -7,3 +7,11 @@ out/
 tsconfig.tsbuildinfo
 claude-android-skill/
 drive-download-*/
+
+# Drive staging — image candidates, not part of the site
+.drive-staging/
+contact-sheet.html
+sample-selection.html
+
+# source PNGs for kit cards — converted into public/kits/
+diy-kit-images/

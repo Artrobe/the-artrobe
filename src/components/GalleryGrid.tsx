@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Artwork } from '@/lib/airtable';
+import { track } from '@/lib/analytics';
 
 interface Props {
   artworks: Artwork[];
@@ -80,7 +81,8 @@ export default function GalleryGrid({ artworks }: Props) {
           </p>
         </motion.div>
       ) : (
-        <div style={{ padding: '1rem 1rem 2rem', columns: 2, columnGap: '0.75rem' }}>
+        <>
+        <div className="art-masonry">
           <AnimatePresence>
             {filtered.map((art, i) => (
               <motion.div
@@ -107,7 +109,8 @@ export default function GalleryGrid({ artworks }: Props) {
                     style={{
                       width: '100%',
                       aspectRatio: art.imgAspect || '2/3',
-                      objectFit: 'cover', display: 'block',
+                      // contain, never cover: artwork must not be cropped
+                      objectFit: 'contain', display: 'block',
                       background: gradients[i % 3],
                     }}
                   />
@@ -130,6 +133,7 @@ export default function GalleryGrid({ artworks }: Props) {
             ))}
           </AnimatePresence>
         </div>
+        </>
       )}
     </>
   );
@@ -191,7 +195,7 @@ function ChipRow({
           return (
             <button
               key={opt.id}
-              onClick={() => onChange(opt.id)}
+              onClick={() => { track('gallery_filter', { filter: opt.label }); onChange(opt.id); }}
               style={{
                 position: 'relative', flexShrink: 0, padding: '0.45rem 0.85rem',
                 fontFamily: 'var(--sans)', fontSize: '0.72rem',

@@ -21,11 +21,6 @@ export default function ProcessPillars() {
         background: 'var(--off-white)',
       }}
     >
-      <style>{`
-        @media (max-width: 640px) {
-          .pillar-body { display: none; }
-        }
-      `}</style>
       <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <Reveal>
           <p style={{

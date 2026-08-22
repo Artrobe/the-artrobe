@@ -9,8 +9,21 @@ export const INSTAGRAM_URL = 'https://www.instagram.com/the.artrobe';
 
 export const CONTACT_EMAIL = 'theartrobe12@gmail.com';
 
-// TODO: replace with the real WhatsApp business number (intl format, no +, no spaces).
-export const WHATSAPP_NUMBER = '910000000000';
+// From the Google Business Profile: 078800 93155 (Indore).
+// NOTE: verify this number is WhatsApp-enabled before relying on the widget —
+// a landline or non-WhatsApp mobile will silently fail for visitors.
+export const WHATSAPP_NUMBER = '917880093155';
+
+// Google Business Profile — The Artrobe, Ashish Nagar Rd, Indore MP 452016
+export const BUSINESS = {
+  name: 'The Artrobe',
+  phone: '+91 78800 93155',
+  street: 'Ashish Nagar Rd, Ashish Nagar',
+  city: 'Indore',
+  region: 'Madhya Pradesh',
+  postalCode: '452016',
+  country: 'IN',
+};
 
 // Prefilled WhatsApp enquiry link builder.
 export const waEnquiry = (text: string) =>

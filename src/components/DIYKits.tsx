@@ -1,106 +1,108 @@
 'use client';
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import Reveal from '@/components/ui/Reveal';
 import ShopifyBuyButton from '@/components/ShopifyBuyButton';
 import { KITS, difficultyColor } from '@/data/kits';
 import { shopifyConfigured } from '@/data/shopify';
+import { waEnquiry } from '@/data/social';
+import { track } from '@/lib/analytics';
 
 export default function DIYKits() {
   const live = shopifyConfigured();
+  const [zoom, setZoom] = useState<{ img: string; name: string } | null>(null);
+
+  useEffect(() => {
+    if (!zoom) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setZoom(null); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [zoom]);
 
   return (
-    <section style={{ padding: '3.5rem 1.25rem', background: 'var(--off-white)', borderTop: '1px solid var(--border)' }}>
-      <Reveal>
-        <p style={{
-          fontFamily: 'var(--sans)', fontSize: '0.6rem',
-          letterSpacing: '0.2em', textTransform: 'uppercase',
-          color: 'var(--green-dk)', marginBottom: '0.5rem', textAlign: 'center',
-        }}>✦ Paint at Home</p>
-      </Reveal>
-      <Reveal delay={0.06}>
-        <h2 style={{
-          fontFamily: 'var(--serif)', fontSize: 'clamp(1.9rem, 6vw, 2.8rem)',
-          fontWeight: 300, color: 'var(--text)', lineHeight: 1.15,
-          letterSpacing: '-0.01em', marginBottom: '0.7rem', textAlign: 'center',
-        }}>
-          DIY Art <em style={{ color: 'var(--green-dk)' }}>Kits</em>
-        </h2>
-      </Reveal>
-      <Reveal delay={0.1}>
-        <p style={{
-          fontFamily: 'var(--sans)', fontSize: '0.9rem',
-          color: 'var(--muted)', lineHeight: 1.7,
-          maxWidth: '46ch', margin: '0 auto 2.4rem', textAlign: 'center',
-        }}>
-          Everything you need to paint a gallery-worthy canvas at home — pre-sketched canvas, premium paints, brushes &amp; a step-by-step guide.
-        </p>
-      </Reveal>
+    <section className="kit-sec">
+      <div className="kit-wrap">
+        <div className="kit-intro">
+          <Reveal>
+            <p className="kit-eyebrow">Paint at home</p>
+          </Reveal>
+          <Reveal delay={0.06}>
+            <h2 className="kit-title">
+              Start anywhere on the<br />
+              <em>texture ladder.</em>
+            </h2>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <p className="kit-lede">
+              Four kits, ordered by how much they ask of you. Each ships with the base,
+              the paste, the pigments and the tools — plus a step-by-step guide filmed
+              in the studio.
+            </p>
+          </Reveal>
+        </div>
 
-      <div style={{
-        display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-        gap: '1.4rem', maxWidth: '900px', margin: '0 auto',
-      }}>
-        {KITS.map((kit, i) => (
-          <motion.div
-            key={kit.id}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.55, delay: i * 0.1 }}
-            style={{
-              background: 'var(--cream)', borderRadius: '14px', overflow: 'hidden',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.08)', display: 'flex', flexDirection: 'column',
-            }}
-          >
-            <div style={{ position: 'relative' }}>
-              <img
-                src={kit.img}
-                alt={`${kit.name} DIY kit`}
-                loading="lazy"
-                style={{ width: '100%', aspectRatio: '4/3', objectFit: 'cover', display: 'block' }}
-              />
-              <span style={{
-                position: 'absolute', top: '0.7rem', left: '0.7rem',
-                background: difficultyColor(kit.difficulty), color: '#fff',
-                fontFamily: 'var(--sans)', fontSize: '0.62rem', fontWeight: 700,
-                letterSpacing: '0.08em', textTransform: 'uppercase',
-                padding: '0.3rem 0.6rem', borderRadius: '6px',
-              }}>
-                {kit.difficulty}
-              </span>
-            </div>
+        <ul className="kit-list">
+          {KITS.map((k, i) => (
+            <Reveal as="li" key={k.id} delay={i * 0.07}>
+              <article className="kit-row">
+                <span className="kit-num">{String(i + 1).padStart(2, '0')}</span>
 
-            <div style={{ padding: '1.1rem 1.2rem 1.3rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
-              <h3 style={{ fontFamily: 'var(--serif)', fontSize: '1.3rem', fontWeight: 400, color: 'var(--text)', marginBottom: '0.3rem' }}>
-                {kit.name}
-              </h3>
-              <p style={{ fontFamily: 'var(--sans)', fontSize: '0.82rem', color: 'var(--muted)', lineHeight: 1.55, marginBottom: '0.9rem', flex: 1 }}>
-                {kit.desc}
-              </p>
-              <p style={{ fontFamily: 'var(--serif)', fontSize: '1.4rem', color: 'var(--green-dk)', marginBottom: '0.9rem' }}>
-                {kit.price}
-              </p>
-
-              {live && kit.shopifyProductId ? (
-                <ShopifyBuyButton productId={kit.shopifyProductId} />
-              ) : (
-                <span
-                  style={{
-                    display: 'block', textAlign: 'center',
-                    background: 'var(--cream)', color: 'var(--muted)',
-                    border: '1px solid var(--border)',
-                    padding: '0.8rem 1rem', borderRadius: '8px',
-                    fontFamily: 'var(--sans)', fontSize: '0.82rem', fontWeight: 700,
-                    letterSpacing: '0.04em', textTransform: 'uppercase',
-                  }}
+                <button
+                  className="kit-thumb"
+                  onClick={() => { track('kit_image_view', { kit: k.name }); setZoom({ img: k.img, name: k.name }); }}
+                  aria-label={`View ${k.name} kit contents`}
                 >
-                  Coming Soon
-                </span>
-              )}
-            </div>
-          </motion.div>
-        ))}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={k.img} alt={k.name} loading="lazy" />
+                  <span className="kit-zoom" aria-hidden>⊕</span>
+                </button>
+
+                <div className="kit-body">
+                  <div className="kit-head">
+                    <h3 className="kit-name">{k.name}</h3>
+                    <span
+                      className="kit-diff"
+                      style={{ color: difficultyColor(k.difficulty), borderColor: difficultyColor(k.difficulty) }}
+                    >
+                      {k.difficulty}
+                    </span>
+                  </div>
+                  <p className="kit-desc">{k.desc}</p>
+                </div>
+
+                <div className="kit-buy">
+                  <span className="kit-price">{k.price}</span>
+                  {live && k.shopifyProductId ? (
+                    <ShopifyBuyButton productId={k.shopifyProductId} />
+                  ) : (
+                    <a
+                      className="kit-cta"
+                      href={waEnquiry(`Hi! I'd like to order the "${k.name}" DIY kit (${k.price}). Is it available?`)}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={() => track('kit_enquiry', { kit: k.name, price: k.price, difficulty: k.difficulty })}
+                    >
+                      Enquire →
+                    </a>
+                  )}
+                </div>
+              </article>
+            </Reveal>
+          ))}
+        </ul>
       </div>
+
+      {zoom && (
+        <div className="kit-lb" onClick={() => setZoom(null)} role="dialog" aria-label={zoom.name}>
+          <figure className="kit-lb-inner" onClick={e => e.stopPropagation()}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={zoom.img} alt={zoom.name} />
+            <figcaption>
+              <span>{zoom.name}</span>
+              <button onClick={() => setZoom(null)} aria-label="Close">×</button>
+            </figcaption>
+          </figure>
+        </div>
+      )}
     </section>
   );
 }

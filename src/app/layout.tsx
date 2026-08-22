@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from 'next';
 import '../styles/globals.css';
 import { INSTAGRAM_URL } from '@/data/social';
 import SubscribePopup from '@/components/SubscribePopup';
+import WhatsAppWidget from '@/components/WhatsAppWidget';
+import Script from 'next/script';
+import { GA_ID } from '@/lib/analytics';
 
 export const metadata: Metadata = {
   title: 'The Artrobe',
@@ -53,6 +56,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <SubscribePopup />
+        <WhatsAppWidget />
+
+        {/* GA4 — afterInteractive so it never blocks first paint */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
       </body>
     </html>
   );

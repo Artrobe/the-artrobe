@@ -5,7 +5,7 @@ import PageShell from '@/components/ui/PageShell';
 import Reveal from '@/components/ui/Reveal';
 import { artworks } from '@/data/artworks';
 
-type CameraState = 'idle' | 'requesting' | 'active' | 'denied';
+type CameraState = 'idle' | 'requesting' | 'active' | 'denied' | 'nocamera' | 'insecure' | 'unsupported';
 
 interface OverlayState {
   scale: number;
@@ -44,20 +44,27 @@ export default function ScanPage() {
     }
   }, []);
 
-  // Auto-trigger permission popup on page load
+  // Do NOT auto-request. Safari (and increasingly Chrome) only show the camera
+  // prompt in response to a user gesture — calling getUserMedia on mount fails
+  // silently and strands the page on "waiting". We only probe the stored state
+  // so an already-granted visitor skips the extra tap.
   useEffect(() => {
-    if (!navigator.mediaDevices?.getUserMedia) return;
-    if (navigator.permissions) {
-      navigator.permissions.query({ name: 'camera' as PermissionName }).then(result => {
-        // Only auto-request if not already denied — avoids immediate blocked screen
-        if (result.state !== 'denied') requestCamera();
-      }).catch(() => {
-        // Permissions API unsupported (older iOS) — auto-request anyway
-        requestCamera();
-      });
-    } else {
-      requestCamera();
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setCameraState('unsupported');
+      return;
     }
+    // getUserMedia is only available over HTTPS or on localhost.
+    if (!window.isSecureContext) {
+      setCameraState('insecure');
+      return;
+    }
+    navigator.permissions?.query({ name: 'camera' as PermissionName })
+      .then(result => {
+        if (result.state === 'granted') requestCamera();
+        else if (result.state === 'denied') setCameraState('denied');
+        else setCameraState('idle');
+      })
+      .catch(() => setCameraState('idle'));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -65,10 +72,15 @@ export default function ScanPage() {
     const video = videoRef.current;
     if (!video) return;
     video.srcObject = stream;
-    // Wait for video to have real dimensions before activating
-    await new Promise<void>(resolve => {
-      video.onloadedmetadata = () => resolve();
-    });
+    // readyState >= HAVE_METADATA means dimensions are already known; waiting on
+    // the event in that case would hang forever with the camera light on.
+    if (video.readyState < 1) {
+      await new Promise<void>(resolve => {
+        const done = () => resolve();
+        video.onloadedmetadata = done;
+        setTimeout(done, 3000); // don't hang if the event never fires
+      });
+    }
     try { await video.play(); } catch {}
     setCameraState('active');
   }
@@ -89,8 +101,15 @@ export default function ScanPage() {
         try {
           const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
           await startStream(stream);
-        } catch {
-          setCameraState('denied');
+        } catch (err) {
+          // Distinguish "user said no" from "there is no camera" — they need
+          // different instructions.
+          const name = (err as DOMException)?.name;
+          if (name === 'NotFoundError' || name === 'OverconstrainedError') {
+            setCameraState('nocamera');
+          } else {
+            setCameraState('denied');
+          }
         }
       }
     }
@@ -270,7 +289,8 @@ export default function ScanPage() {
                 Allow camera to continue
               </p>
               <p style={{ fontFamily: 'var(--sans)', fontSize: '0.78rem', color: 'rgba(255,255,255,0.55)', margin: 0, lineHeight: 1.6 }}>
-                Tap below if the permission popup didn't appear.
+                Your browser will ask for permission. Nothing is uploaded — the
+                preview stays on your device.
               </p>
             </div>
             <motion.button
@@ -315,6 +335,28 @@ export default function ScanPage() {
         )}
 
         {/* Denied state */}
+        {(cameraState === 'insecure' || cameraState === 'unsupported' || cameraState === 'nocamera') && (
+          <div style={{
+            position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center', gap: '0.9rem',
+            background: 'rgba(0,0,0,0.85)', padding: '2rem', textAlign: 'center',
+          }}>
+            <p style={{ fontFamily: 'var(--serif)', fontSize: '1.1rem', color: '#fff', margin: 0 }}>
+              {cameraState === 'nocamera' ? 'No camera found' : 'Camera unavailable here'}
+            </p>
+            <p style={{
+              fontFamily: 'var(--sans)', fontSize: '0.8rem', lineHeight: 1.7,
+              color: 'rgba(255,255,255,0.6)', margin: 0, maxWidth: '32ch',
+            }}>
+              {cameraState === 'nocamera'
+                ? 'This device does not report a usable camera. Try opening the page on your phone.'
+                : cameraState === 'insecure'
+                  ? 'Camera access needs a secure connection. Open this page over https:// (or on localhost) and try again.'
+                  : 'This browser does not support camera access. Try Chrome or Safari on your phone.'}
+            </p>
+          </div>
+        )}
+
         {cameraState === 'denied' && (
           <div style={{
             position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',

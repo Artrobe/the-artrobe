@@ -28,11 +28,7 @@ export default function Stories({ posts }: { posts: JournalSummary[] }) {
         </Reveal>
       </div>
 
-      <div style={{
-        display: 'flex', gap: '1rem', overflowX: 'auto',
-        padding: '0 1.25rem 1rem', scrollSnapType: 'x mandatory',
-        WebkitOverflowScrolling: 'touch',
-      }}>
+      <div className="story-rail">
         {posts.map((post, i) => (
           <motion.div
             key={post.slug}
@@ -40,7 +36,7 @@ export default function Stories({ posts }: { posts: JournalSummary[] }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.5, delay: (i % 4) * 0.08 }}
-            style={{ scrollSnapAlign: 'start', flex: '0 0 auto', width: 'min(78vw, 260px)' }}
+            style={{ scrollSnapAlign: 'start' }}
           >
             <Link
               href={`/journal/${post.slug}`}

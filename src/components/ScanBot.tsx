@@ -88,13 +88,21 @@ export default function ScanBot() {
           background: 'var(--green)', color: '#fff',
           border: 'none', cursor: 'pointer',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontSize: '1.4rem',
           boxShadow: '0 8px 24px rgba(110,158,102,0.35)',
-          fontFamily: 'var(--sans)',
           flexShrink: 0,
+          lineHeight: 0,
         }}
+        aria-label="Scan your wall"
       >
-        📸
+        {/* SVG, not an emoji: emoji sit on a text baseline with their own
+            descender space, which no amount of flex centring corrects. */}
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path
+            d="M4 8.5h2.6l1.2-1.8a1.4 1.4 0 0 1 1.16-.62h6.08c.47 0 .9.23 1.16.62L17.4 8.5H20a1.5 1.5 0 0 1 1.5 1.5v7A1.5 1.5 0 0 1 20 18.5H4A1.5 1.5 0 0 1 2.5 17v-7A1.5 1.5 0 0 1 4 8.5Z"
+            stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"
+          />
+          <circle cx="12" cy="13.2" r="3.1" stroke="currentColor" strokeWidth="1.6" />
+        </svg>
       </motion.button>
     </div>
   );

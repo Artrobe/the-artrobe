@@ -7,7 +7,7 @@ import type { Artwork } from '@/lib/airtable';
 export default function GalleryClient({ artworks }: { artworks: Artwork[] }) {
   return (
     <PageShell>
-      <div style={{ padding: '2rem 1.25rem 0.5rem' }}>
+      <div className="sticky-head" style={{ padding: '2rem 1.25rem 0.5rem' }}>
         <Reveal>
           <p style={{
             fontFamily: 'var(--sans)', fontSize: '0.6rem',
